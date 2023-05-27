@@ -203,15 +203,13 @@ class _Register<T> {
   }
 
   bool hasListenable(Set<_Register> registers) {
-    for (final listenable in listenables) {
-      for (final register in registers) {
-        if (register.listenables.contains(listenable)) {
-          return true;
-        }
-      }
+    final cache = <Listenable, bool>{};
+
+    for (final listenable in registers.expand((e) => e.listenables)) {
+      cache[listenable] = true;
     }
 
-    return false;
+    return listenables.any(cache.containsKey);
   }
 
   @override
