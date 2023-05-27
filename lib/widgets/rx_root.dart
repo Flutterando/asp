@@ -67,7 +67,12 @@ class RxRoot extends InheritedWidget {
       filter: filter,
     );
 
-    final registre = _Register<T>(const {}, null, disposer);
+    final registre = _Register<T>(
+      const {},
+      null,
+      disposer: disposer,
+      isCallback: true,
+    );
     final inherited = context.dependOnInheritedWidgetOfExactType<RxRoot>(
       aspect: registre,
     );
@@ -153,10 +158,11 @@ class _RxRootElement extends InheritedElement {
   @override
   void notifyDependent(covariant InheritedWidget oldWidget, Element dependent) {
     final registers = _getRegisters(dependent);
-    if (registers.contains(currentRegister)) {
+    if (currentRegister?.hasListenable(registers) ?? false) {
       _removeListeners(registers);
       setDependencies(dependent, HashSet<_Register>());
-      dependent.didChangeDependencies();
+
+      if (dependent.mounted) dependent.didChangeDependencies();
     }
   }
 
@@ -183,8 +189,9 @@ class _Register<T> {
   final mutableCallback = _MutableCallback();
   final bool Function()? filter;
   final RxDisposer? disposer;
+  final bool isCallback;
 
-  _Register(this.listenables, this.filter, [this.disposer]);
+  _Register(this.listenables, this.filter, {this.isCallback = false, this.disposer});
 
   void listener() {
     mutableCallback.callback?.call();
@@ -195,14 +202,27 @@ class _Register<T> {
     disposer?.call();
   }
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    final setEquals = const DeepCollectionEquality().equals;
+  bool hasListenable(Set<_Register> registers) {
+    for (final listenable in listenables) {
+      for (final register in registers) {
+        if (register.listenables.contains(listenable)) {
+          return true;
+        }
+      }
+    }
 
-    return other is _Register<T> && setEquals(other.listenables, listenables) && other.disposer == disposer;
+    return false;
   }
 
   @override
-  int get hashCode => listenables.hashCode ^ disposer.hashCode;
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is _Register<T> && setEquals(other.listenables, listenables);
+  }
+
+  @override
+  int get hashCode {
+    return listenables.hashCode;
+  }
 }
