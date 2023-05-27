@@ -1,6 +1,6 @@
 part of '../asp.dart';
 
-class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> {
+class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueListenable<RxMap<K, V>> {
   late final Map<K, V> _map;
 
   RxMap([Map<K, V>? map]) {
@@ -52,5 +52,23 @@ class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> {
       notifyListeners();
     }
     return result;
+  }
+
+  @override
+  Future<RxMap<K, V>> next(
+    Function onAction, {
+    Duration timeLimit = const Duration(seconds: 10),
+  }) {
+    return rxNext<RxMap<K, V>>(
+      this,
+      onAction: onAction,
+      timeLimit: timeLimit,
+    );
+  }
+
+  @override
+  RxMap<K, V> get value {
+    _rxMainContext.reportRead(this);
+    return this;
   }
 }

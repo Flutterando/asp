@@ -24,9 +24,11 @@ RxDisposer rxObserver<T>(
   void Function(T? value)? effect,
 }) {
   _stackTrace = StackTrace.current;
+
   _rxMainContext.track();
-  body();
+  _resolveTrack(body());
   final listenables = _rxMainContext.untrack(_stackTrace);
+
   void dispatch() {
     if (filter?.call() ?? true) {
       final value = body();
@@ -43,6 +45,20 @@ RxDisposer rxObserver<T>(
     });
   }
   return RxDisposer(() {});
+}
+
+T _resolveTrack<T>(T body) {
+  if (body is RxValueListenable) {
+    body.value;
+    return body;
+  } else if (body is Iterable) {
+    for (final element in body) {
+      _resolveTrack(element);
+    }
+    return body;
+  } else {
+    return body;
+  }
 }
 
 /// Wait the next change of a [Atom].

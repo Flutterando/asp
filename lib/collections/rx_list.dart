@@ -1,6 +1,6 @@
 part of '../asp.dart';
 
-class RxList<T> extends ChangeNotifier with ListMixin<T> {
+class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListenable<RxList<T>> {
   late final List<T> _list;
   RxList([List<T>? list]) {
     if (list != null) {
@@ -220,5 +220,23 @@ class RxList<T> extends ChangeNotifier with ListMixin<T> {
   set length(int value) {
     _list.length = value;
     notifyListeners();
+  }
+
+  @override
+  Future<RxList<T>> next(
+    Function onAction, {
+    Duration timeLimit = const Duration(seconds: 10),
+  }) {
+    return rxNext<RxList<T>>(
+      this,
+      onAction: onAction,
+      timeLimit: timeLimit,
+    );
+  }
+
+  @override
+  RxList<T> get value {
+    _rxMainContext.reportRead(this);
+    return this;
   }
 }

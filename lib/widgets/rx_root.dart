@@ -25,8 +25,9 @@ class RxRoot extends InheritedWidget {
     bool Function()? filter,
   }) {
     _stackTrace = StackTrace.current;
+
     _rxMainContext.track();
-    final value = selectFunc();
+    final value = _resolveTrack(selectFunc());
     final listenables = _rxMainContext.untrack(_stackTrace);
 
     final registre = _Register<T>(listenables, filter);
