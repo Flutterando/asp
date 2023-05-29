@@ -1,7 +1,20 @@
 part of '../asp.dart';
 
-class RxSet<T> extends ChangeNotifier with SetMixin<T> implements RxValueListenable<RxSet<T>> {
+/// An RxSet gives you a deeper level of observability on a set of values.
+/// It tracks when values are added, removed or modified and notifies the observers.
+///
+/// Use an RxSet when a change in the set matters.
+class RxSet<T> extends ChangeNotifier
+    with SetMixin<T>
+    implements RxValueListenable<RxSet<T>> {
   late final Set<T> _set;
+
+  /// Creates a [RxSet] that may be initialized with a [set].
+  /// {@tool snippet}
+  /// ```dart
+  /// final set = RxSet({'jacob', 'sara'});
+  /// ```
+  /// {@end-tool}
   RxSet([Set<T>? set]) {
     if (set != null) {
       _set = set;
@@ -10,6 +23,12 @@ class RxSet<T> extends ChangeNotifier with SetMixin<T> implements RxValueListena
     }
   }
 
+  /// Creates a [RxSet] from a [set].
+  /// {@tool snippet}
+  /// ```dart
+  /// final set = RxSet({'jacob', 'sara'});
+  /// ```
+  /// {@end-tool}
   static RxSet<T> of<T>(Set<T> set) => RxSet<T>(set);
 
   @override

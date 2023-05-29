@@ -29,5 +29,6 @@
 .pub-cache/
 .pub/
 build/
+coverage/
 
 

@@ -1,7 +1,20 @@
 part of '../asp.dart';
 
-class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListenable<RxList<T>> {
+/// An RxList gives you a deeper level of observability on a list of values.
+/// It tracks when items are added, removed or modified and notifies the observers.
+///
+/// Use an RxList when a change in the list matters.
+class RxList<T> extends ChangeNotifier
+    with ListMixin<T>
+    implements RxValueListenable<RxList<T>> {
   late final List<T> _list;
+
+  /// Creates a [RxList] that may be initialized with a [list].
+  /// {@tool snippet}
+  /// ```dart
+  /// final list = RxList(['jacob', 'sara']);
+  /// ```
+  /// {@end-tool}
   RxList([List<T>? list]) {
     if (list != null) {
       _list = list;
@@ -195,6 +208,12 @@ class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListe
     notifyListeners();
   }
 
+  /// Creates a [RxList] from a [list].
+  /// {@tool snippet}
+  /// ```dart
+  /// final list = RxList.of(['jacob', 'sara']);
+  /// ```
+  /// {@end-tool}
   static RxList<T> of<T>(List<T> list) => RxList<T>(list);
 
   @override

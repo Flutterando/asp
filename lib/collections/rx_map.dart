@@ -1,8 +1,20 @@
 part of '../asp.dart';
 
-class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueListenable<RxMap<K, V>> {
+/// An RxMap gives you a deeper level of observability on a map of values.
+/// It tracks when keys are added, removed or modified and notifies the observers.
+///
+/// Use an RxMap when a change in the map matters.
+class RxMap<K, V> extends ChangeNotifier
+    with MapMixin<K, V>
+    implements RxValueListenable<RxMap<K, V>> {
   late final Map<K, V> _map;
 
+  /// Creates a [RxMap] that may be initialized with a [map].
+  /// {@tool snippet}
+  /// ```dart
+  /// final map = RxMap({'name': 'jacob'});
+  /// ```
+  /// {@end-tool}
   RxMap([Map<K, V>? map]) {
     if (map != null) {
       _map = map;
@@ -11,6 +23,12 @@ class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueL
     }
   }
 
+  /// Creates a [RxMap] from a [map].
+  /// {@tool snippet}
+  /// ```dart
+  /// final map = RxMap.of({'name': 'jacob'});
+  /// ```
+  /// {@end-tool}
   static RxMap<K, V> of<K, V>(Map<K, V> map) => RxMap<K, V>(map);
 
   @override
