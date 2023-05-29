@@ -1,16 +1,13 @@
-# example
+# Examples
 
-A new Flutter project.
+### Trivial counter
 
-## Getting Started
+The default example that you get when you create a new Flutter app, but using atomic state pattern.
 
-This project is a starting point for a Flutter application.
+[Jump to Source](https://github.com/Flutterando/asp/tree/main/example/trivial_counter)
 
-A few resources to get you started if this is your first Flutter project:
+### Shop cart
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Atomic state pattern applied to a simple shopping cart, in a way to showcase the multiple state relationship.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[Jump to Source](https://github.com/Flutterando/asp/tree/main/example/shop_cart)
