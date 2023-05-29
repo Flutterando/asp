@@ -343,9 +343,9 @@ Widget build(BuildContext context){
 
 Flutter projects using Atom
 
-[Trivial Counter](https://github.com/Flutterando/asp/tree/master/asp/example/trivial_counter).
+[Trivial Counter](https://github.com/Flutterando/asp/tree/main/example/trivial_counter).
 
-[Shop Cart](https://github.com/Flutterando/asp/tree/master/asp/example/shop_cart).
+[Shop Cart](https://github.com/Flutterando/asp/tree/main/example/shop_cart).
 
 ## Features and bugs
 
