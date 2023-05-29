@@ -1,27 +1,28 @@
-import 'dart:developer';
-
 import 'package:asp/asp.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('rx add', () async {
     final list = RxList(['jacob', 'sara']);
-    rxObserver(() {
-      log('----------------');
-      for (final item in list) {
-        log(item);
-      }
-    });
+    var addCount = 0;
+    rxObserver(
+      () => list.value,
+      effect: (val) {
+        addCount++;
+      },
+    );
     await Future.delayed(const Duration(milliseconds: 800));
     list.add('novo');
     await Future.delayed(const Duration(milliseconds: 800));
     list.add('novo 2');
     await Future.delayed(const Duration(milliseconds: 800));
+    expect(addCount, equals(2));
+    expect(list.length, equals(4));
   });
 
   test('rx contains', () async {
     final list = RxList.of(['jacob', 'sara']);
-    assert(list.contains('jacob'));
+    expect(list, contains('jacob'));
   });
 
   test('rx list observer effect', () async {
@@ -34,7 +35,7 @@ void main() {
       },
     );
     list.value.add('coco');
-    assert(effectHappened);
+    expect(effectHappened, isTrue);
   });
 
   test('replace rxlist and keep reactivity', () async {
