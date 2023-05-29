@@ -87,17 +87,6 @@ class Atom<T> extends ValueNotifier<T> implements RxValueListenable<T> {
   }
 }
 
-/// Send action
-@Deprecated('Use [Atom] instead.')
-class RxAction extends Atom<RxVoid> {
-  /// Send action
-  @Deprecated('Use [Atom] instead.')
-  RxAction() : super(rxVoid);
-
-  /// Track action listener
-  RxVoid get action => value;
-}
-
 /// The layer responsible for making business decisions
 /// to perform actions and modify Atoms;
 /// ```dart
