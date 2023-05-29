@@ -1,34 +1,37 @@
 import 'package:asp/asp.dart';
+import 'package:example/src/module.dart';
 import 'package:flutter/material.dart';
+import 'package:uno/uno.dart';
 
-import 'module.dart';
-import 'pages/cart_page.dart';
-import 'pages/home_page.dart';
+import 'src/pages/home.dart';
+import 'src/reducers/burg_reducer.dart';
+import 'src/services/burg_service.dart';
 
 void main() {
+  injector.addInstance(Uno());
+  injector.add(BurgService.new);
+  injector.addSingleton(BurgReducer.new);
   injector.commit();
-  runApp(RxRoot(child: MyApp()));
+
+  runApp(const RxRoot(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({
-    super.key,
-  });
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.deepPurple,
-      ),
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.dark,
       darkTheme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Colors.deepPurple,
+        colorSchemeSeed: Colors.red,
         brightness: Brightness.dark,
       ),
       routes: {
-        '/': (context) => HomePage(),
-        '/cart': (context) => CartPage(),
+        '/': (context) => const HomePage(),
       },
     );
   }

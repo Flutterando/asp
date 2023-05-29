@@ -1,0 +1,22 @@
+{
+    "products": [
+        {
+            "id": "0",
+            "title": "Simple Burg",
+            "image": "https://classic.exame.com/wp-content/uploads/2020/05/mafe-studio-LV2p9Utbkbw-unsplash-1.jpg?quality=70&strip=info&w=1024",
+            "price":  13.50
+        },
+        {
+            "id": "1",
+            "title": "React Burg",
+            "image": "https://cdn2.revistahoteis.com.br/wp-content/uploads/2022/05/Hilton-Barra_Barra-burguerTomas-RangelOK.jpg",
+            "price":  20.50
+        },
+        {
+            "title": "Ionic Burg",
+            "id": "2",
+            "image": "https://wickbold.com.br/wp-content/uploads/2014/01/hamburguer_1.jpg",
+            "price":  30.00
+        }
+    ]
+}

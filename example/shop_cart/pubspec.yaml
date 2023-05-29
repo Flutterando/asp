@@ -23,10 +23,15 @@ environment:
 dependencies:
   asp:
     path: ../../
+  chat_bubbles: ^1.4.1
+  chat_gpt_flutter: ^1.0.10
+  badges: ^3.1.1
+  intl: ^0.18.1
+  auto_injector: ^1.0.2+2
+  uno: ^1.1.1
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.1
-  auto_injector: ^1.0.2
 
 dev_dependencies:
   flutter_test:
