@@ -9,6 +9,9 @@ part of '../asp.dart';
 /// }
 /// ```
 class RxRoot extends InheritedWidget {
+  /// Start reducers.
+  final List<Reducer>? reducers;
+
   /// Responsible for propagating Atom values
   /// as a dependency of a child Widget.<br>
   /// RxRoot should be one of the first Widgets in the Flutter tree.
@@ -17,7 +20,11 @@ class RxRoot extends InheritedWidget {
   ///   runApp(RxRoot(child: AppWidget()));
   /// }
   /// ```
-  const RxRoot({super.key, required super.child});
+  const RxRoot({
+    super.key,
+    required super.child,
+    this.reducers,
+  });
 
   static T _select<T>(
     BuildContext context,

@@ -3,7 +3,7 @@ import 'package:example/models/product_model.dart';
 
 import '../atoms/product.dart';
 
-class ShopReducer extends RxReducer {
+class ShopReducer extends Reducer {
   ShopReducer() {
     on(() => [fetchProductsAction], _fetchProductsReducer);
     on(() => [addProductAction], _addProductReducer);

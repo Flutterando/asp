@@ -1,4 +1,4 @@
-## [1.0.2] - 2023-05-27
+## [1.0.3] - 2023-05-29
 
 * Added automatic track
 * fix reactive callback

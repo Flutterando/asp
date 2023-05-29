@@ -105,7 +105,7 @@ class RxAction extends Atom<RxVoid> {
 /// final counterState = Atom<int>(0);
 /// final incrementState = RxAction();
 ///
-/// class CounterReducer extends RxReducer {
+/// class CounterReducer extends Reducer {
 ///   final HomeState state;
 ///
 ///   CounterReducer(this.state) {
@@ -123,7 +123,7 @@ class RxAction extends Atom<RxVoid> {
 /// ...
 /// onPressed: () => increment();
 /// ```
-abstract class RxReducer {
+abstract class Reducer {
   final _rxDisposers = <RxDisposer>[];
 
   /// reducer register:
