@@ -18,8 +18,9 @@ void main() {
     list.add('novo 2');
     await Future.delayed(const Duration(milliseconds: 800));
   });
+
   test('rx contains', () async {
-    final list = RxList(['jacob', 'sara']);
+    final list = RxList.of(['jacob', 'sara']);
     assert(list.contains('jacob'));
   });
 

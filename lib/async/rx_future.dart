@@ -1,13 +1,34 @@
 part of '../asp.dart';
 
-enum FutureStatus { pending, rejected, fulfilled, none }
+/// RxFuture status values.
+enum FutureStatus {
+  /// initial status
+  pending,
 
+  /// error status
+  rejected,
+
+  /// success status
+  fulfilled,
+
+  /// unused status
+  none,
+}
+
+/// The RxFuture is the reactive wrapper around a Future.
+/// You can use it to show the UI under various states of a Future,
+/// from pending to fulfilled or rejected.
+///
+/// The status, result and error fields of an RxFuture are observable and can be consumed on the UI.
+/// You can add a new Future using `.value`.
 class RxFuture<T> implements Future<T> {
   late Future<T> _future;
   bool _isStartedFuture = false;
 
+  /// Returns the future value
   Future<T> get value => _future;
 
+  /// Updates the future value
   set value(Future<T> value) {
     _future = value;
     _isStartedFuture = false;
@@ -17,6 +38,8 @@ class RxFuture<T> implements Future<T> {
   final Atom<FutureStatus> _status = Atom<FutureStatus>(FutureStatus.pending);
 
   final Atom<T?> _result = Atom<T?>(null);
+
+  /// The current status
   FutureStatus get status {
     _startedFuture();
     return _status.value;
@@ -30,6 +53,8 @@ class RxFuture<T> implements Future<T> {
   }
 
   final Atom _error = Atom(null);
+
+  /// The current error
   dynamic get error {
     _startedFuture();
     return _error.value;
@@ -37,8 +62,15 @@ class RxFuture<T> implements Future<T> {
 
   RxFuture._(Future<T> future) : _future = future;
 
+  /// Creates a [RxFuture] from a [future].
+  /// {@tool snippet}
+  /// ```dart
+  /// final rxValue = RxFuture.of(futureValue);
+  /// ```
+  /// {@end-tool}
   static RxFuture<T> of<T>(Future<T> future) => RxFuture._(future);
 
+  /// The current value, that may be null
   T? get data {
     _startedFuture();
     return status == FutureStatus.fulfilled ? _result.value : null;
