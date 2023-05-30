@@ -15,7 +15,7 @@ This extension adds a class **Atom** and a converter **ValueNotifier -> Atom** s
 
 The **Atom** is directly an extension of [ValueListenable](https://api.flutter.dev/flutter/foundation/ValueListenable-class.html) then any object that implements it can be converted to **Atom**
 
-The only difference from **Atom** to [ValueNotifier](https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html) is the automatic signature function in Observers **rxObserver()** e **RxBuilder**, very similar to [MobX reactions](https://pub.dev/packages/mobx).
+The only difference from **Atom** to [ValueNotifier](https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html) is the automatic signature function in Observers **rxObserver()** and **RxBuilder**, very similar to [MobX reactions](https://pub.dev/packages/mobx).
 
 ## Using
 
@@ -80,7 +80,7 @@ rxObserver((){
 
 ## Using Getters
 
-We can also use **getters** in reactive values making, let's repeat the example above:
+We can also use **getters** to combine other getters which themselves point to **Atom Objects**, let's repeat the example above:
 
 ```dart
 
@@ -103,7 +103,7 @@ rxObserver((){
 
 ## Filters
 
-All Rx listeners have a property filter **filter** which is a function that returns a **bool**. Use this to define when (or not) to reflect changes:
+All Rx listeners have a property **filter** which is a function that returns a **bool**. Use this to define when (or not) to reflect changes:
 
 ```dart
 RxDisposer disposer = rxObserver<String>((){
@@ -117,7 +117,7 @@ disposer();
 
 ## Flutter and Atom
 
-RxNotifeir has tools that help with state management and propagation for the Widget.
+RxNotifier has tools that help with the state management and propagation for the Widget.
 
 1. Add the RxRoot Widget to the root of the app:
 
@@ -154,8 +154,7 @@ class HomePage extends StatelessWidget {
 }
 ```
 
-3. To execute methods that call something external to the state like [Dialog], [SnackBar] and etc,
-use `context.callback` to listen for one or several [Atom] subscribing to a callback.
+3. To call [Dialogs], [SnackBars], etc. based on state changes, listen to one or more [Atoms], subscribing to a callback, using `context.callback`:
 
 ```dart
 
@@ -237,7 +236,7 @@ This pattern consists of the state being an object with its own reactivity.
 Developers still have trouble understanding state management in Flutter.
 We had this conclusion after several research in the community fluttering and also
 in partner companies.
-Atomic State is a noob-friendly state management approuch at the same time
+Atomic State is a noob-friendly state management approach at the same time
 that maintains a reliable structure thinking of scalability and maintenance.
 
 More details, read this [Medium article on the subject](https://medium.com/@jacobmoura/introdu%C3%A7%C3%A3o-ao-estado-at%C3%B4mico-no-flutter-com-Atom-73ad9edf8718).
@@ -264,7 +263,7 @@ These two layers share atoms that in turn represent the state and the dispatch o
 
 ## Atom`s
 
-Atom represent the reactive state of an application.
+Atom represents the reactive state of an application.
 Each atom has its own reactivity.
 
 
@@ -293,9 +292,8 @@ final fetchProductsState = Atom.action();
 
 ## Reducer
 
-In this architecture you are forced to split state management
-of business rules, which may seem strange at first when seen
-that we are always managing and reducing state in the same layer as `BLoC` and `ChangeNotifier` for example.<br>
+In this architecture you are forced to separate state management
+from business rules, which may seem strange at first because we are used to manage and reduce state in the same layer with approaches like `BLoC` or `ChangeNotifier`.<br>
 However, dividing state management and business rule execution will help us distribute multiple states to the same widget, and these multiple states will not need to be concatenated beforehand through a `facade` or `proxy`.
 
 The layer responsible for making business decisions will be called `Reducer`:
@@ -322,9 +320,9 @@ class ProductReducer extends Reducer {
 
 ## View (Widget)
 
-Any widget can listen to changes of one or many atoms,
-provided they have the `RxRoot` widget as their ancestor.
-k
+Any widget can listen to changes of one or more atoms,
+as long as they have the `RxRoot` widget as their ancestor.
+
 The `context.select()` method is added via Extension to `BuildContext` and can be called on any type of Widget, `StatefulWidget` and `StatelessWidget`.
 
 ```dart
