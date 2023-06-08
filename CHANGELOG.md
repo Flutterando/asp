@@ -1,3 +1,7 @@
+## [1.0.4] - 2023-06-08
+
+* Fix callback error;
+
 ## [1.0.3] - 2023-05-29
 
 * Added automatic track

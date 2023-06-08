@@ -1,6 +1,6 @@
 name: asp
 description: ASP (Atomic State Pattern) is a extension to ValueNotifier by transparently applying functional reactive programming (TFRP)
-version: 1.0.3
+version: 1.0.4
 homepage: https://github.com/Flutterando/asp
 
 environment:
