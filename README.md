@@ -193,6 +193,40 @@ Widget build(BuildContext context){
 }
 ```
 
+## AtomObserver
+
+This component can pick up all changes made to any Atom that is in the project. This will be useful for logs or analytics. You can only subscribe once to see notifications, we recommend doing this in function `main()`;
+
+```dart
+main(){
+  AtomObserver.changes((atom){
+    // send to analytics.
+  });
+}
+```
+
+## PIPERS
+
+Atoms can now rely on operators to modify the setter's behavior. We call these operators Pipers.
+We can add Pipers in Atom or create our own piper.
+The ASP library already has some Pipers to start with, they are: `DebounceTime`, `ThrottleTime` and `Interval`.
+
+```dart
+ final searchTextAction = Atom(
+    '',
+    key: 'searchTextAction',
+    pipe: debounceTime()
+ );
+
+  searchTextAction.value = 'j';
+  searchTextAction.value = 'jac';
+  searchTextAction.value = 'jacob';
+
+  // send only one value: 'jacob';›
+
+
+```
+
 ## Collections and Asyncs
 
 **RxList**
