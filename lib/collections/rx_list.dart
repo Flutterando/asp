@@ -4,10 +4,10 @@ part of '../asp.dart';
 /// It tracks when items are added, removed or modified and notifies the observers.
 ///
 /// Use an RxList when a change in the list matters.
-class RxList<T> extends ChangeNotifier
-    with ListMixin<T>
-    implements RxValueListenable<RxList<T>> {
+class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListenable<RxList<T>> {
   late final List<T> _list;
+  @override
+  late final String key;
 
   /// Creates a [RxList] that may be initialized with a [list].
   /// {@tool snippet}
@@ -15,7 +15,8 @@ class RxList<T> extends ChangeNotifier
   /// final list = RxList(['jacob', 'sara']);
   /// ```
   /// {@end-tool}
-  RxList([List<T>? list]) {
+  RxList([List<T>? list, String? key]) {
+    this.key = key ?? 'RxList:$hashCode';
     if (list != null) {
       _list = list;
     } else {

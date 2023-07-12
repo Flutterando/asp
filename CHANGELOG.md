@@ -1,3 +1,8 @@
+## [1.1.0] - 2023-07-12
+
+* Added: Pipes;
+* Added: AtomObserver;
+
 ## [1.0.4] - 2023-06-08
 
 * Fix callback error;

@@ -4,10 +4,10 @@ part of '../asp.dart';
 /// It tracks when values are added, removed or modified and notifies the observers.
 ///
 /// Use an RxSet when a change in the set matters.
-class RxSet<T> extends ChangeNotifier
-    with SetMixin<T>
-    implements RxValueListenable<RxSet<T>> {
+class RxSet<T> extends ChangeNotifier with SetMixin<T> implements RxValueListenable<RxSet<T>> {
   late final Set<T> _set;
+  @override
+  late final String key;
 
   /// Creates a [RxSet] that may be initialized with a [set].
   /// {@tool snippet}
@@ -15,7 +15,9 @@ class RxSet<T> extends ChangeNotifier
   /// final set = RxSet({'jacob', 'sara'});
   /// ```
   /// {@end-tool}
-  RxSet([Set<T>? set]) {
+  RxSet([Set<T>? set, String? key]) {
+    this.key = key ?? 'RxList:$hashCode';
+
     if (set != null) {
       _set = set;
     } else {

@@ -17,11 +17,29 @@ part 'collections/rx_map.dart';
 part 'collections/rx_set.dart';
 part 'extensions/rx_extensions.dart';
 part 'functions/functions.dart';
+part 'pipers/debounce_time.dart';
+part 'pipers/interval.dart';
+part 'pipers/throttle_time.dart';
 part 'widgets/rx_builder.dart';
 part 'widgets/rx_callback.dart';
 part 'widgets/rx_root.dart';
 
+/// Used in [Atom.pipe] propetie
+typedef PipeCallback<T> = void Function(T value, void Function(T value) emit);
+
 final _rxMainContext = _RxContext();
+
+/// Tracker of all atom`s changes;
+class AtomObserver {
+  AtomObserver._();
+
+  static void Function(RxValueListenable atom)? _dispatcher;
+
+  /// Changes Dispatcher Register
+  static void changes(void Function(RxValueListenable atom)? dispatcher) {
+    _dispatcher = dispatcher;
+  }
+}
 
 /// An interface for subclasses of [Listenable] that expose a [value].
 abstract class RxValueListenable<T> implements ValueListenable<T> {
@@ -32,6 +50,9 @@ abstract class RxValueListenable<T> implements ValueListenable<T> {
     Function onAction, {
     Duration timeLimit = const Duration(seconds: 10),
   });
+
+  /// [Atom] Identify
+  String get key;
 }
 
 /// Extension to ValueNotifier by transparently applying
@@ -48,31 +69,55 @@ class Atom<T> extends ValueNotifier<T> implements RxValueListenable<T> {
 
   T _value;
 
+  @override
+  late final String key;
+
+  /// Transform the set value;
+  PipeCallback<T>? pipe;
+
   /// Extension to ValueNotifier by transparently applying
   /// functional reactive programming (TFRP).
-  Atom(this._value) : super(_value);
+  Atom(this._value, {String? key, this.pipe}) : super(_value) {
+    this.key = key ?? 'Atom:$hashCode';
+  }
 
   /// Factory that return a Atom<RxVoid> instance.
   /// ```dart
   /// Atom<RxVoid>(rxVoid); => Atom.action();
   /// ```
-  static Atom<RxVoid> action() => Atom(rxVoid);
+  static Atom<RxVoid> action({
+    String? key,
+    PipeCallback<RxVoid>? pipe,
+  }) {
+    return Atom(
+      rxVoid,
+      key: key,
+      pipe: pipe,
+    );
+  }
 
   /// The current value stored in this notifier.
   @override
   set value(T newValue) {
+    final pipe = this.pipe;
+    if (pipe == null) {
+      _changeValue(newValue);
+    } else {
+      pipe(newValue, _changeValue);
+    }
+  }
+
+  void _changeValue(T newValue) {
     _value = newValue;
     notifyListeners();
+    AtomObserver._dispatcher?.call(this);
   }
 
   /// Tear-offs for set value in this notifier.
-  void setValue(T newValue) {
-    _value = newValue;
-    notifyListeners();
-  }
+  void setValue(T newValue) => value = newValue;
 
   /// Re-call all the registered listeners.
-  void call() => notifyListeners();
+  void call() => value = value;
 
   @override
   Future<T> next(

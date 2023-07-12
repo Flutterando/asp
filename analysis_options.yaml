@@ -7,3 +7,4 @@ linter:
     avoid_returning_this: false
     unawaited_futures: false
     lines_longer_than_80_chars: false
+    use_setters_to_change_properties: false

@@ -4,10 +4,10 @@ part of '../asp.dart';
 /// It tracks when keys are added, removed or modified and notifies the observers.
 ///
 /// Use an RxMap when a change in the map matters.
-class RxMap<K, V> extends ChangeNotifier
-    with MapMixin<K, V>
-    implements RxValueListenable<RxMap<K, V>> {
+class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueListenable<RxMap<K, V>> {
   late final Map<K, V> _map;
+  @override
+  late final String key;
 
   /// Creates a [RxMap] that may be initialized with a [map].
   /// {@tool snippet}
@@ -15,7 +15,9 @@ class RxMap<K, V> extends ChangeNotifier
   /// final map = RxMap({'name': 'jacob'});
   /// ```
   /// {@end-tool}
-  RxMap([Map<K, V>? map]) {
+  RxMap([Map<K, V>? map, String? key]) {
+    this.key = key ?? 'RxList:$hashCode';
+
     if (map != null) {
       _map = map;
     } else {
