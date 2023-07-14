@@ -209,7 +209,13 @@ main(){
 
 Atoms can now rely on operators to modify the setter's behavior. We call these operators Pipers.
 We can add Pipers in Atom or create our own piper.
-The ASP library already has some Pipers to start with, they are: `DebounceTime`, `ThrottleTime` and `Interval`.
+The ASP library already has some Pipers to start with.
+
+
+**DebounceTime**:
+
+Emits a notification from an Atom only after a specified period 
+of time has passed without another source issuing:
 
 ```dart
  final searchTextAction = Atom(
@@ -222,9 +228,89 @@ The ASP library already has some Pipers to start with, they are: `DebounceTime`,
   searchTextAction.value = 'jac';
   searchTextAction.value = 'jacob';
 
-  // send only one value: 'jacob';›
+  // prints: 'jacob'
 
 
+```
+
+**ThrottleTime**:
+
+Emits a notification from an `Atom`, then ignores subsequent
+source values for duration milliseconds, then repeats this process:
+
+```dart
+ final searchTextAction = Atom(
+    '',
+    key: 'searchTextAction',
+    pipe: throttleTime()
+ );
+
+  searchTextAction.value = 'j';
+  searchTextAction.value = 'jac';
+  searchTextAction.value = 'jacob';
+
+  // prints: 'j'
+
+
+```
+
+**Interval**:
+
+Emits a notification from an `Atom` after a given duration:
+
+```dart
+ final textAction = Atom(
+    '',
+    key: 'searchTextAction',
+    pipe: interval(const Duration(seconds: 1))
+ );
+
+  searchTextAction.value = 'j';
+  searchTextAction.value = 'jac';
+  searchTextAction.value = 'jacob';
+
+  // prints: 'j' after 1 seconds.
+  // prints: 'jac' after 1 seconds.
+  // prints: 'jacob' after 1 seconds.
+
+
+```
+
+**Distinct**:
+
+Skips data value if they are equal to the previous data value:
+
+```dart
+ final textAction = Atom(
+    '',
+    key: 'searchTextAction',
+    pipe: interval(const Duration(seconds: 1))
+ );
+
+  searchTextAction.value = 'jacob';
+  searchTextAction.value = 'jacob';
+  searchTextAction.value = 'jacob';
+  searchTextAction.value = 'mia';
+  searchTextAction.value = 'mia';
+
+  // prints: 'jacob'.
+  // prints: 'mia'.
+
+
+```
+
+**MuiltiPipe**:
+
+Concat many pipes.
+```dart
+final textState = Atom(
+     '',
+     key: 'textState',
+     pipe: multiPipe([
+        distinct(),
+        interval(),
+    ]),
+);
 ```
 
 ## Collections and Asyncs

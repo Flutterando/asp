@@ -1,3 +1,7 @@
+## [1.1.1] - 2023-07-14
+
+* Added: Pipers: Distinct and multiPipe;
+
 ## [1.1.0] - 2023-07-12
 
 * Added: Pipes;
