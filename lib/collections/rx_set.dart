@@ -4,6 +4,10 @@ part of '../asp.dart';
 /// It tracks when values are added, removed or modified and notifies the observers.
 ///
 /// Use an RxSet when a change in the set matters.
+@Deprecated('Collections, Futures and Streams will no longer be '
+    'supported by this package as they violate the ASP standard. '
+    'It is better to use a pure [Atom] synchronously '
+    'to understand the flow of reactivity.')
 class RxSet<T> extends ChangeNotifier with SetMixin<T> implements RxValueListenable<RxSet<T>> {
   late final Set<T> _set;
   @override
@@ -15,6 +19,10 @@ class RxSet<T> extends ChangeNotifier with SetMixin<T> implements RxValueListena
   /// final set = RxSet({'jacob', 'sara'});
   /// ```
   /// {@end-tool}
+  @Deprecated('Collections, Futures and Streams will no longer be '
+      'supported by this package as they violate the ASP standard. '
+      'It is better to use a pure [Atom] synchronously '
+      'to understand the flow of reactivity.')
   RxSet([Set<T>? set, String? key]) {
     this.key = key ?? 'RxList:$hashCode';
 

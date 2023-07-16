@@ -1,6 +1,10 @@
 part of '../asp.dart';
 
 /// RxStream status values.
+@Deprecated('Collections, Futures and Streams will no longer be '
+    'supported by this package as they violate the ASP standard. '
+    'It is better to use a pure [Atom] synchronously '
+    'to understand the flow of reactivity.')
 enum StreamStatus {
   /// initial status
   waiting,
@@ -20,6 +24,10 @@ enum StreamStatus {
 /// from waiting to active, done or rejected.
 ///
 /// The status, data and error fields of an RxStream are observable and can be consumed on the UI.
+@Deprecated('Collections, Futures and Streams will no longer be '
+    'supported by this package as they violate the ASP standard. '
+    'It is better to use a pure [Atom] synchronously '
+    'to understand the flow of reactivity.')
 class RxStream<T> extends Stream<T> {
   late final StreamSubscription _sub;
 
@@ -48,6 +56,10 @@ class RxStream<T> extends Stream<T> {
 
   late final Stream<T> _stream;
 
+  @Deprecated('Collections, Futures and Streams will no longer be '
+      'supported by this package as they violate the ASP standard. '
+      'It is better to use a pure [Atom] synchronously '
+      'to understand the flow of reactivity.')
   RxStream._(Stream<T> stream, {T? initialValue}) {
     _result = Atom<T?>(initialValue);
     _stream = stream;

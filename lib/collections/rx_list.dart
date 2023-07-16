@@ -4,6 +4,11 @@ part of '../asp.dart';
 /// It tracks when items are added, removed or modified and notifies the observers.
 ///
 /// Use an RxList when a change in the list matters.
+
+@Deprecated('Collections, Futures and Streams will no longer be '
+    'supported by this package as they violate the ASP standard. '
+    'It is better to use a pure [Atom] synchronously '
+    'to understand the flow of reactivity.')
 class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListenable<RxList<T>> {
   late final List<T> _list;
   @override
@@ -15,6 +20,10 @@ class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListe
   /// final list = RxList(['jacob', 'sara']);
   /// ```
   /// {@end-tool}
+  @Deprecated('Collections, Futures and Streams will no longer be '
+      'supported by this package as they violate the ASP standard. '
+      'It is better to use a pure [Atom] synchronously '
+      'to understand the flow of reactivity.')
   RxList([List<T>? list, String? key]) {
     this.key = key ?? 'RxList:$hashCode';
     if (list != null) {

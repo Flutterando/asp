@@ -4,6 +4,11 @@ part of '../asp.dart';
 /// It tracks when keys are added, removed or modified and notifies the observers.
 ///
 /// Use an RxMap when a change in the map matters.
+
+@Deprecated('Collections, Futures and Streams will no longer be '
+    'supported by this package as they violate the ASP standard. '
+    'It is better to use a pure [Atom] synchronously '
+    'to understand the flow of reactivity.')
 class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueListenable<RxMap<K, V>> {
   late final Map<K, V> _map;
   @override
@@ -15,6 +20,11 @@ class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueL
   /// final map = RxMap({'name': 'jacob'});
   /// ```
   /// {@end-tool}
+  ///
+  @Deprecated('Collections, Futures and Streams will no longer be '
+      'supported by this package as they violate the ASP standard. '
+      'It is better to use a pure [Atom] synchronously '
+      'to understand the flow of reactivity.')
   RxMap([Map<K, V>? map, String? key]) {
     this.key = key ?? 'RxList:$hashCode';
 

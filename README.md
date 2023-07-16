@@ -313,36 +313,6 @@ final textState = Atom(
 );
 ```
 
-## Collections and Asyncs
-
-**RxList**
-
-An RxList gives you a deeper level of observability on a list of values. It tracks when items are added, removed or modified and notifies the observers. Use an RxList when a change in the list matters.
-
-**RxMap**
-
-An RxMap gives you a deeper level of observability on a map of values. It tracks when keys are added, removed or modified and notifies the observers. Use an RxMap when a change in the map matters.
-
-**RxSet**
-
-An RxSet gives you a deeper level of observability on a set of values. It tracks when values are added, removed or modified and notifies the observers. Use an RxSet when a change in the set matters.
-
-**RxFuture**
-
-The RxFuture is the reactive wrapper around a Future. You can use it to show the UI under various states of a Future, from pending to fulfilled or rejected. The status, result and error fields of an RxFuture are observable and can be consumed on the UI.
-You can add a new Future using **.value**
-```dart
-final rxFuture = RxFuture.of(myFuture);
-...
-
-rxFuture.value = newFuture;
-```
-
-**RxStream**
-
-The stream that is tracked for status and value changes.
-T initialValue: The starting value of the stream.
-
 ## Implementing the Atomic State.
 
 It is possible to implement [Recoil](https://recoiljs.org) Atoms pattern using `asp`.

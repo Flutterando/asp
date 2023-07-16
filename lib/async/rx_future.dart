@@ -1,6 +1,10 @@
 part of '../asp.dart';
 
 /// RxFuture status values.
+@Deprecated('Collections, Futures and Streams will no longer be '
+    'supported by this package as they violate the ASP standard. '
+    'It is better to use a pure [Atom] synchronously '
+    'to understand the flow of reactivity.')
 enum FutureStatus {
   /// initial status
   pending,
@@ -21,6 +25,11 @@ enum FutureStatus {
 ///
 /// The status, result and error fields of an RxFuture are observable and can be consumed on the UI.
 /// You can add a new Future using `.value`.
+
+@Deprecated('Collections, Futures and Streams will no longer be '
+    'supported by this package as they violate the ASP standard. '
+    'It is better to use a pure [Atom] synchronously '
+    'to understand the flow of reactivity.')
 class RxFuture<T> implements Future<T> {
   late Future<T> _future;
   bool _isStartedFuture = false;
@@ -60,6 +69,10 @@ class RxFuture<T> implements Future<T> {
     return _error.value;
   }
 
+  @Deprecated('Collections, Futures and Streams will no longer be '
+      'supported by this package as they violate the ASP standard. '
+      'It is better to use a pure [Atom] synchronously '
+      'to understand the flow of reactivity.')
   RxFuture._(Future<T> future) : _future = future;
 
   /// Creates a [RxFuture] from a [future].
