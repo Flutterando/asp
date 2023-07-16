@@ -1,3 +1,9 @@
+## [1.2.0] - 2023-07-16
+
+* Added: `Atom.next` and `Atom.buffer`;
+* Added: Doc FAQ.
+* @Deprecated: RxList, RxMap, RxSet, RxFuture and RxStream.
+
 ## [1.1.1] - 2023-07-14
 
 * Added: Pipers: Distinct and multiPipe;

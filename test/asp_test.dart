@@ -98,4 +98,35 @@ void main() {
     expect(listA, equals([0, 1, 1, 1]));
     expect(listB, equals([0, 0, 2, 3]));
   });
+
+  test('Buffer values', () {
+    final a = Atom(0);
+    expect(a.buffer(3), completion([1, 3, 3]));
+
+    a.setValue(1);
+    a.setValue(3);
+    a.setValue(3);
+  });
+
+  test('Buffer values with state pattern', () {
+    final a = Atom<TestState>(StartTestState());
+    expect(
+      a.buffer(2),
+      completion([
+        isA<LoadingTestState>(),
+        isA<SuccessTestState>(),
+      ]),
+    );
+
+    a.value = LoadingTestState();
+    a.value = SuccessTestState();
+  });
 }
+
+sealed class TestState {}
+
+class StartTestState implements TestState {}
+
+class LoadingTestState implements TestState {}
+
+class SuccessTestState implements TestState {}

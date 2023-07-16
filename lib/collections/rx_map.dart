@@ -85,13 +85,11 @@ class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueL
   }
 
   @override
-  Future<RxMap<K, V>> next(
-    Function onAction, {
+  Future<RxMap<K, V>> next({
     Duration timeLimit = const Duration(seconds: 10),
   }) {
     return rxNext<RxMap<K, V>>(
       this,
-      onAction: onAction,
       timeLimit: timeLimit,
     );
   }
@@ -100,5 +98,11 @@ class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueL
   RxMap<K, V> get value {
     _rxMainContext.reportRead(this);
     return this;
+  }
+
+  @override
+  Future<List<RxMap<K, V>>> buffer(int count, {Duration timeLimit = const Duration(seconds: 10)}) {
+    // TODO: implement buffer
+    throw UnimplementedError();
   }
 }

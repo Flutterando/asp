@@ -63,28 +63,14 @@ T _resolveTrack<T>(T body) {
 
 /// Wait the next change of a [Atom].
 /// The [timeLimit] is 10 seconds by default.
-/// [onAction] callback execute after register listener.
 Future<T> rxNext<T>(
   RxValueListenable<T> rx, {
-  Function? onAction,
   Duration timeLimit = const Duration(seconds: 10),
 }) async {
   final completer = Completer<T>();
   final disposable = rxObserver<T>(
     () => rx.value,
     effect: completer.complete,
-  );
-  final actionResult = onAction?.call();
-  assert(
-    () {
-      if (actionResult is Future) {
-        throw FlutterError.fromParts(<DiagnosticsNode>[
-          ErrorSummary('onAction returned a Future.'),
-        ]);
-      }
-      return true;
-    }(),
-    'onAction returned a Future.',
   );
   final result = await completer.future.timeout(
     timeLimit,

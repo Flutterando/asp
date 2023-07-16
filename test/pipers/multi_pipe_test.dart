@@ -2,7 +2,7 @@ import 'package:asp/asp.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('multi pipe ...', () async {
+  test('multi pipe ...', () {
     final atom = Atom<String>(
       'n',
       pipe: multiPipe([
@@ -25,15 +25,8 @@ void main() {
       ]),
     );
 
-    atom.addListener(
-      expectAsync0(
-        max: 1,
-        () => expect(atom.value, 'fa1234'),
-      ),
-    );
+    expect(atom.next(), completion('fa1234'));
 
     atom.value = 'fa';
-
-    await Future.delayed(const Duration(seconds: 3));
   });
 }

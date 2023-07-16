@@ -8,24 +8,7 @@ void main() {
       pipe: debounceTime(),
     );
 
-    var i = 0;
-
-    atom.addListener(
-      expectAsync0(
-        max: 3,
-        () {
-          if (i == 0) {
-            expect(atom.value, 'ja');
-          } else if (i == 1) {
-            expect(atom.value, 'jaco');
-          }
-          if (i == 2) {
-            expect(atom.value, 'jacob');
-          }
-          i++;
-        },
-      ),
-    );
+    expect(atom.buffer(3), completion(['ja', 'jaco', 'jacob']));
 
     atom.value = 'j';
     atom.value = 'ja';
@@ -34,6 +17,5 @@ void main() {
     atom.value = 'jaco';
     await Future.delayed(const Duration(seconds: 1));
     atom.value = 'jacob';
-    await Future.delayed(const Duration(seconds: 1));
   });
 }

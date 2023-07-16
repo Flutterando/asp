@@ -47,9 +47,15 @@ class AtomObserver {
 abstract class RxValueListenable<T> implements ValueListenable<T> {
   /// Wait the next change of a [Atom].
   /// The [timeLimit] is 10 seconds by default.
-  /// [onAction] callback execute after register listener.
-  Future<T> next(
-    Function onAction, {
+  Future<T> next({
+    Duration timeLimit = const Duration(seconds: 10),
+  });
+
+  /// Buffer changes of a [Atom].
+  /// The [count] is a number of a buffered items.
+  /// The [timeLimit] is 10 seconds by default.
+  Future<List<T>> buffer(
+    int count, {
     Duration timeLimit = const Duration(seconds: 10),
   });
 
@@ -122,15 +128,37 @@ class Atom<T> extends ValueNotifier<T> implements RxValueListenable<T> {
   void call() => value = value;
 
   @override
-  Future<T> next(
-    Function onAction, {
+  Future<T> next({
     Duration timeLimit = const Duration(seconds: 10),
   }) {
     return rxNext<T>(
       this,
-      onAction: onAction,
       timeLimit: timeLimit,
     );
+  }
+
+  @override
+  Future<List<T>> buffer(int count, {Duration timeLimit = const Duration(seconds: 10)}) async {
+    final completer = Completer<List<T>>();
+    final values = <T>[];
+
+    final disposable = rxObserver<T>(
+      () => value,
+      effect: (_) {
+        values.add(_value);
+        if (count == values.length) {
+          completer.complete(values);
+        }
+      },
+    );
+
+    final result = await completer.future.timeout(
+      timeLimit,
+      onTimeout: () => values,
+    );
+
+    disposable();
+    return result;
   }
 }
 

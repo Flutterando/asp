@@ -93,13 +93,11 @@ class RxSet<T> extends ChangeNotifier with SetMixin<T> implements RxValueListena
   }
 
   @override
-  Future<RxSet<T>> next(
-    Function onAction, {
+  Future<RxSet<T>> next({
     Duration timeLimit = const Duration(seconds: 10),
   }) {
     return rxNext<RxSet<T>>(
       this,
-      onAction: onAction,
       timeLimit: timeLimit,
     );
   }
@@ -108,5 +106,11 @@ class RxSet<T> extends ChangeNotifier with SetMixin<T> implements RxValueListena
   RxSet<T> get value {
     _rxMainContext.reportRead(this);
     return this;
+  }
+
+  @override
+  Future<List<RxSet<T>>> buffer(int count, {Duration timeLimit = const Duration(seconds: 10)}) {
+    // TODO: implement buffer
+    throw UnimplementedError();
   }
 }

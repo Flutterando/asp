@@ -205,6 +205,37 @@ main(){
 }
 ```
 
+## Awaiters
+
+Atom has methods that can either wait for the next value change or buffer those changes. For this we will use the `Atom.next` and `Atom.buffer` methods.
+
+These methods can be useful in specific situations that require this wait, but they were thought to help mainly in unit tests.
+
+**next**:
+
+Wait the next change of a `Atom`.<br>
+The `timeLimit` is 10 seconds by default.
+
+```dart
+
+final atom = Atom('string');
+final nextValue = await atom.next();
+
+```
+
+**buffer**:
+
+Buffer changes of a `Atom`.<br>
+The `count` is a number of a buffered items.<br>
+The [timeLimit] is 10 seconds by default.
+
+```dart
+
+final atom = Atom('string');
+final listOfValues = await atom.buffer(3);
+
+```
+
 ## PIPERS
 
 Atoms can now rely on operators to modify the setter's behavior. We call these operators Pipers.
@@ -427,13 +458,63 @@ Widget build(BuildContext context){
 
 ```
 
+## FAQ
+
+### How to test an Atom?
+
+We can use `AWAITERS` to help us test.
+See an example with `Atom.buffer`.
+
+```dart
+sealed class TestState {}
+
+class StartTestState implements TestState {}
+
+class LoadingTestState implements TestState {}
+
+class SuccessTestState implements TestState {}
+
+....
+
+test('Buffer values with state pattern', () {
+    final a = Atom<TestState>(StartTestState());
+
+    expect(
+      a.buffer(2),
+      completion([
+        isA<LoadingTestState>(),
+        isA<SuccessTestState>(),
+      ]),
+    );
+  
+    a.value = LoadingTestState();
+    a.value = SuccessTestState();
+  });
+}
+```
+
+It is interesting to note that expect must be declared before changing the atom so that it can listen to the changes.
+`Atom.buffer` returns a [Future](https://api.flutter-io.cn/flutter/dart-async/Future-class.html), thus enabling the use of matchers [completion](https://api.flutter-io.cn/flutter/package-matcher_expect/completion.html) and [completes](https://api.flutter.dev/flutter/package-matcher_expect/completes.html).
+
+### Can one Atom call another?
+
+In some cases, a single action can trigger multiple reactions, but it is generally recommended to avoid directly chaining actions.
+The main problem that the `ASP` (Atomic State Pattern) pattern aims to solve is the distribution of state in situations where it is necessary to wait for an event to reduce the current state.
+
+An example of this is when using a `BLoC` (Business Logic Component) that depends on the state of another `BLoC`. In this case, one would have to wait for the dependency propagation in the initState method, for example, before sending the data to the main `BLoC`. This configuration can become complex in many cases.
+
+We should consider that `ATOM`'s can be reduced in the `Reducer`, which can listen to more than one action or change of an ATOM and perform the necessary filtering.
+Therefore, it is preferable to avoid listening to one action only to trigger another action. Instead, it is recommended to improve the filter in the `Reducer`.
+
+
+
 ## Examples
 
 Flutter projects using Atom
 
-[Trivial Counter](https://github.com/Flutterando/asp/tree/main/example/trivial_counter).
+- [Trivial Counter](https://github.com/Flutterando/asp/tree/main/example/trivial_counter).
 
-[Shop Cart](https://github.com/Flutterando/asp/tree/main/example/shop_cart).
+- [Shop Cart](https://github.com/Flutterando/asp/tree/main/example/shop_cart).
 
 ## Features and bugs
 

@@ -252,13 +252,11 @@ class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListe
   }
 
   @override
-  Future<RxList<T>> next(
-    Function onAction, {
+  Future<RxList<T>> next({
     Duration timeLimit = const Duration(seconds: 10),
   }) {
     return rxNext<RxList<T>>(
       this,
-      onAction: onAction,
       timeLimit: timeLimit,
     );
   }
@@ -267,5 +265,11 @@ class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListe
   RxList<T> get value {
     _rxMainContext.reportRead(this);
     return this;
+  }
+
+  @override
+  Future<List<RxList<T>>> buffer(int count, {Duration timeLimit = const Duration(seconds: 10)}) {
+    // TODO: implement buffer
+    throw UnimplementedError();
   }
 }
