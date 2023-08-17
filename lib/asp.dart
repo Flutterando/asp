@@ -10,11 +10,11 @@ import 'package:flutter/widgets.dart';
 
 export 'package:flutter/foundation.dart' show ValueListenable;
 
-part 'async/rx_future.dart';
-part 'async/rx_stream.dart';
-part 'collections/rx_list.dart';
-part 'collections/rx_map.dart';
-part 'collections/rx_set.dart';
+part 'async/atom_future.dart';
+part 'async/atom_stream.dart';
+part 'collections/atom_list.dart';
+part 'collections/atom_map.dart';
+part 'collections/atom_set.dart';
 part 'extensions/asp_extensions.dart';
 part 'functions/functions.dart';
 part 'pipers/debounce_time.dart';

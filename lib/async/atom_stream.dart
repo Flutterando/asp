@@ -1,10 +1,6 @@
 part of '../asp.dart';
 
-/// RxStream status values.
-@Deprecated('Collections, Futures and Streams will no longer be '
-    'supported by this package as they violate the ASP standard. '
-    'It is better to use a pure [Atom] synchronously '
-    'to understand the flow of reactivity.')
+/// AtomStream status values.
 enum StreamStatus {
   /// initial status
   waiting,
@@ -19,25 +15,21 @@ enum StreamStatus {
   error,
 }
 
-/// The RxStream is the reactive wrapper around a StreamSubscription.
+/// The AtomStream is the reactive wrapper around a StreamSubscription.
 /// You can use it to show the UI under various states of a Stream,
 /// from waiting to active, done or rejected.
 ///
-/// The status, data and error fields of an RxStream are observable and can be consumed on the UI.
-@Deprecated('Collections, Futures and Streams will no longer be '
-    'supported by this package as they violate the ASP standard. '
-    'It is better to use a pure [Atom] synchronously '
-    'to understand the flow of reactivity.')
-class RxStream<T> extends Stream<T> {
+/// The status, data and error fields of an AtomStream are observable and can be consumed on the UI.
+class AtomStream<T> extends Stream<T> {
   late final StreamSubscription _sub;
 
-  /// Creates a [RxStream] from a [stream].
+  /// Creates a [AtomStream] from a [stream].
   /// {@tool snippet}
   /// ```dart
-  /// final rxStream = RxStream.of(stream);
+  /// final AtomStream = AtomStream.of(stream);
   /// ```
   /// {@end-tool}
-  static RxStream<T> of<T>(Stream<T> stream) => RxStream._(stream);
+  static AtomStream<T> of<T>(Stream<T> stream) => AtomStream._(stream);
 
   final Atom<StreamStatus> _status = Atom<StreamStatus>(StreamStatus.waiting);
 
@@ -56,11 +48,7 @@ class RxStream<T> extends Stream<T> {
 
   late final Stream<T> _stream;
 
-  @Deprecated('Collections, Futures and Streams will no longer be '
-      'supported by this package as they violate the ASP standard. '
-      'It is better to use a pure [Atom] synchronously '
-      'to understand the flow of reactivity.')
-  RxStream._(Stream<T> stream, {T? initialValue}) {
+  AtomStream._(Stream<T> stream, {T? initialValue}) {
     _result = Atom<T?>(initialValue);
     _stream = stream;
     _sub = _stream.listen(

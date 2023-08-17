@@ -22,34 +22,34 @@ extension ValueNotifierParse<T> on ValueListenable<T> {
   Atom<T> asAtom() => Atom<T>(value);
 }
 
-/// Convert a [Stream] to [RxStream].
-extension RxStreamExtension<T> on Stream<T> {
-  /// Convert a [Stream] to [RxStream].
-  RxStream<T> asAtom() => RxStream.of<T>(this);
+/// Convert a [Stream] to [AtomStream].
+extension StreamExtension<T> on Stream<T> {
+  /// Convert a [Stream] to [AtomStream].
+  AtomStream<T> asAtom([Stream<T>? stream]) => AtomStream.of<T>(stream ?? this);
 }
 
-/// Convert a [Future] to [RxFuture].
-extension RxFutureExtension<T> on Future<T> {
-  /// Convert a [Future] to [RxFuture].
-  RxFuture<T> asAtom() => RxFuture.of<T>(this);
+/// Convert a [Future] to [AtomFuture].
+extension FutureExtension<T> on Future<T> {
+  /// Convert a [Future] to [AtomFuture].
+  AtomFuture<T> asAtom([Future<T>? future]) => AtomFuture.of<T>(future ?? this);
 }
 
-/// Convert a [List] to [RxList].
-extension RxListExtension<T> on List<T> {
-  /// Convert a [List] to [RxList].
-  RxList<T> asAtom() => RxList.of<T>(this);
+/// Convert a [List] to [AtomList].
+extension ListExtension<T> on List<T> {
+  /// Convert a [List] to [AtomList].
+  AtomList<T> asAtom([List<T>? list]) => AtomList.of<T>(list ?? this);
 }
 
-/// Convert a [Set] to [RxSet].
-extension RxSetExtension<T> on Set<T> {
-  /// Convert a [Set] to [RxSet].
-  RxSet<T> asAtom() => RxSet.of<T>(this);
+/// Convert a [Set] to [AtomSet].
+extension SetExtension<T> on Set<T> {
+  /// Convert a [Set] to [AtomSet].
+  AtomSet<T> asAtom([Set<T>? set]) => AtomSet.of<T>(set ?? this);
 }
 
-/// Convert a [Map] to [RxMap].
-extension RxMapExtension<K, V> on Map<K, V> {
-  /// Convert a [Map] to [RxMap].
-  RxMap<K, V> asAtom() => RxMap.of<K, V>(this);
+/// Convert a [Map] to [AtomMap].
+extension MapExtension<K, V> on Map<K, V> {
+  /// Convert a [Map] to [AtomMap].
+  AtomMap<K, V> asAtom([Map<K, V>? map]) => AtomMap.of<K, V>(map ?? this);
 }
 
 /// Propagates the changes of the Atom placed in the

@@ -1,49 +1,45 @@
 part of '../asp.dart';
 
-/// An RxMap gives you a deeper level of observability on a map of values.
+/// An AtomMap gives you a deeper level of observability on a map of values.
 /// It tracks when keys are added, removed or modified and notifies the observers.
 ///
-/// Use an RxMap when a change in the map matters.
-
-@Deprecated('Collections, Futures and Streams will no longer be '
-    'supported by this package as they violate the ASP standard. '
-    'It is better to use a pure [Atom] synchronously '
-    'to understand the flow of reactivity.')
-class RxMap<K, V> extends ChangeNotifier
+/// Use an AtomMap when a change in the map matters.
+class AtomMap<K, V> extends ChangeNotifier
     with MapMixin<K, V>
-    implements ValueListenableAtom<RxMap<K, V>> {
+    implements ValueListenableAtom<AtomMap<K, V>> {
   late final Map<K, V> _map;
   @override
   late final String key;
 
-  /// Creates a [RxMap] that may be initialized with a [map].
+  /// Creates a [AtomMap] that may be initialized with a [map].
+  ///
+  /// [map]: The initial list to populate the RxList.
+  /// [key]: An optional key for identification.
+  ///
   /// {@tool snippet}
+  /// Example:
   /// ```dart
-  /// final map = RxMap({'name': 'jacob'});
+  /// final list = AtomMap.of({'name': 'jacob'});
   /// ```
   /// {@end-tool}
-  ///
-  @Deprecated('Collections, Futures and Streams will no longer be '
-      'supported by this package as they violate the ASP standard. '
-      'It is better to use a pure [Atom] synchronously '
-      'to understand the flow of reactivity.')
-  RxMap([Map<K, V>? map, String? key]) {
+  AtomMap._(Map<K, V>? map, {String? key}) {
     this.key = key ?? 'RxList:$hashCode';
 
-    if (map != null) {
-      _map = map;
-    } else {
-      _map = {};
-    }
+    _map = map ?? {};
   }
 
-  /// Creates a [RxMap] from a [map].
+  /// Creates a [AtomMap] that may be initialized with a [map].
+  ///
+  /// [map]: The initial list to populate the RxList.
+  /// [key]: An optional key for identification.
+  ///
   /// {@tool snippet}
+  /// Example:
   /// ```dart
-  /// final map = RxMap.of({'name': 'jacob'});
+  /// final list = AtomMap.of({'name': 'jacob'});
   /// ```
   /// {@end-tool}
-  static RxMap<K, V> of<K, V>(Map<K, V> map) => RxMap<K, V>(map);
+  static AtomMap<K, V> of<K, V>(Map<K, V>? map, {String? key}) => AtomMap<K, V>._(map, key: key);
 
   @override
   void addAll(Map<K, V> other) {
@@ -87,23 +83,26 @@ class RxMap<K, V> extends ChangeNotifier
   }
 
   @override
-  Future<RxMap<K, V>> next({
+  Future<AtomMap<K, V>> next({
     Duration timeLimit = const Duration(seconds: 10),
   }) {
-    return aspNext<RxMap<K, V>>(
+    return aspNext<AtomMap<K, V>>(
       this,
       timeLimit: timeLimit,
     );
   }
 
   @override
-  RxMap<K, V> get value {
+  AtomMap<K, V> get value {
     _aspContext.reportRead(this);
     return this;
   }
 
   @override
-  Future<List<RxMap<K, V>>> buffer(int count, {Duration timeLimit = const Duration(seconds: 10)}) {
+  Future<List<AtomMap<K, V>>> buffer(
+    int count, {
+    Duration timeLimit = const Duration(seconds: 10),
+  }) {
     // TODO: implement buffer
     throw UnimplementedError();
   }

@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('rx add', () async {
-    final list = RxList(['jacob', 'sara']);
+    final list = <String>[].asAtom(['jacob', 'sara']);
     var addCount = 0;
     aspObserver(
       () => list.value,
@@ -21,12 +21,12 @@ void main() {
   });
 
   test('rx contains', () async {
-    final list = RxList.of(['jacob', 'sara']);
+    final list = AtomList.of(['jacob', 'sara']);
     expect(list, contains('jacob'));
   });
 
   test('rx list observer effect', () async {
-    final list = Atom(RxList(['jacob', 'sara']));
+    final list = Atom(AtomList.of(['jacob', 'sara']));
     var effectHappened = false;
     aspObserver(
       () => list.value,
@@ -39,7 +39,7 @@ void main() {
   });
 
   test('replace rxlist and keep reactivity', () async {
-    final list = Atom(RxList(['jacob', 'sara']));
+    final list = Atom(AtomList.of(['jacob', 'sara']));
     var ignoreFirstReaction = true;
     aspObserver(
       () => list.value,
@@ -51,7 +51,7 @@ void main() {
         expect(list.value.contains('coco'), isTrue);
       }),
     );
-    list.value = RxList();
+    list.value = AtomList.of([]);
     list.value.add('coco');
   });
 }

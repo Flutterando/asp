@@ -1,36 +1,30 @@
 part of '../asp.dart';
 
-/// An RxList gives you a deeper level of observability on a list of values.
+/// An AtomList gives you a deeper level of observability on a list of values.
 /// It tracks when items are added, removed or modified and notifies the observers.
 ///
-/// Use an RxList when a change in the list matters.
-
-@Deprecated('Collections, Futures and Streams will no longer be '
-    'supported by this package as they violate the ASP standard. '
-    'It is better to use a pure [Atom] synchronously '
-    'to understand the flow of reactivity.')
-class RxList<T> extends ChangeNotifier with ListMixin<T> implements ValueListenableAtom<RxList<T>> {
+/// Use an AtomList when a change in the list matters.
+class AtomList<T> extends ChangeNotifier
+    with ListMixin<T>
+    implements ValueListenableAtom<AtomList<T>> {
   late final List<T> _list;
   @override
   late final String key;
 
-  /// Creates a [RxList] that may be initialized with a [list].
+  /// Creates a [AtomList] that may be initialized with a [list].
+  ///
+  /// [list]: The initial list to populate the AtomList.
+  /// [key]: An optional key for identification.
+  ///
   /// {@tool snippet}
+  /// Example:
   /// ```dart
-  /// final list = RxList(['jacob', 'sara']);
+  /// final list = AtomList.of(['jacob', 'sara']);
   /// ```
   /// {@end-tool}
-  @Deprecated('Collections, Futures and Streams will no longer be '
-      'supported by this package as they violate the ASP standard. '
-      'It is better to use a pure [Atom] synchronously '
-      'to understand the flow of reactivity.')
-  RxList([List<T>? list, String? key]) {
-    this.key = key ?? 'RxList:$hashCode';
-    if (list != null) {
-      _list = list;
-    } else {
-      _list = [];
-    }
+  AtomList._(List<T>? list, {String? key}) {
+    this.key = key ?? 'AtomList:$hashCode';
+    _list = list ?? [];
   }
 
   @override
@@ -218,13 +212,18 @@ class RxList<T> extends ChangeNotifier with ListMixin<T> implements ValueListena
     notifyListeners();
   }
 
-  /// Creates a [RxList] from a [list].
+  /// Creates a [AtomList] that may be initialized with a [list].
+  ///
+  /// [list]: The initial list to populate the AtomList.
+  /// [key]: An optional key for identification.
+  ///
   /// {@tool snippet}
+  /// Example:
   /// ```dart
-  /// final list = RxList.of(['jacob', 'sara']);
+  /// final list = AtomList.of(['jacob', 'sara']);
   /// ```
   /// {@end-tool}
-  static RxList<T> of<T>(List<T> list) => RxList<T>(list);
+  static AtomList<T> of<T>(List<T>? list, {String? key}) => AtomList<T>._(list, key: key);
 
   @override
   List<T> operator +(List<T> other) {
@@ -252,23 +251,23 @@ class RxList<T> extends ChangeNotifier with ListMixin<T> implements ValueListena
   }
 
   @override
-  Future<RxList<T>> next({
+  Future<AtomList<T>> next({
     Duration timeLimit = const Duration(seconds: 10),
   }) {
-    return aspNext<RxList<T>>(
+    return aspNext<AtomList<T>>(
       this,
       timeLimit: timeLimit,
     );
   }
 
   @override
-  RxList<T> get value {
+  AtomList<T> get value {
     _aspContext.reportRead(this);
     return this;
   }
 
   @override
-  Future<List<RxList<T>>> buffer(int count, {Duration timeLimit = const Duration(seconds: 10)}) {
+  Future<List<AtomList<T>>> buffer(int count, {Duration timeLimit = const Duration(seconds: 10)}) {
     // TODO: implement buffer
     throw UnimplementedError();
   }
