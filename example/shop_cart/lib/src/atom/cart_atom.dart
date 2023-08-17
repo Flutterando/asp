@@ -4,7 +4,7 @@ import 'package:asp/asp.dart';
 import '../models/burg_model.dart';
 
 // atom
-final cartBurgs = RxList<BurgModel>([]);
+final cartBurgs = <BurgModel>[].asAtom();
 final finalValue = Atom<String>('R\$ 0.00');
 
 // action

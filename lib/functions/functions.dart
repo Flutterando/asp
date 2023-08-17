@@ -12,22 +12,22 @@ part of '../asp.dart';
 /// ```dart
 /// final counter = Atom<int>(0);
 ///
-/// RxDisposer disposer = rxObserver((){
+/// DisposerObserver disposer = aspObserver((){
 ///    print(counter.value);
 /// });
 ///
 /// disposer();
 /// ```
-RxDisposer rxObserver<T>(
+ASPDisposer aspObserver<T>(
   T? Function() body, {
   bool Function()? filter,
   void Function(T? value)? effect,
 }) {
   _stackTrace = StackTrace.current;
 
-  _rxMainContext.track();
+  _aspContext.track();
   _resolveTrack(body());
-  final listenables = _rxMainContext.untrack(_stackTrace);
+  final listenables = _aspContext.untrack(_stackTrace);
 
   void dispatch() {
     if (filter?.call() ?? true) {
@@ -40,15 +40,15 @@ RxDisposer rxObserver<T>(
     final listenable = Listenable.merge(listenables.toList());
     listenable.addListener(dispatch);
 
-    return RxDisposer(() {
+    return ASPDisposer(() {
       listenable.removeListener(dispatch);
     });
   }
-  return RxDisposer(() {});
+  return ASPDisposer(() {});
 }
 
 T _resolveTrack<T>(T body) {
-  if (body is RxValueListenable) {
+  if (body is ValueListenableAtom) {
     body.value;
     return body;
   } else if (body is Iterable) {
@@ -63,29 +63,29 @@ T _resolveTrack<T>(T body) {
 
 /// Wait the next change of a [Atom].
 /// The [timeLimit] is 10 seconds by default.
-Future<T> rxNext<T>(
-  RxValueListenable<T> rx, {
+Future<T> aspNext<T>(
+  ValueListenableAtom<T> atom, {
   Duration timeLimit = const Duration(seconds: 10),
 }) async {
   final completer = Completer<T>();
-  final disposable = rxObserver<T>(
-    () => rx.value,
+  final disposable = aspObserver<T>(
+    () => atom.value,
     effect: completer.complete,
   );
   final result = await completer.future.timeout(
     timeLimit,
-    onTimeout: () => rx.value,
+    onTimeout: () => atom.value,
   );
   disposable();
   return result;
 }
 
 /// Remove all listeners of rxObserver;
-class RxDisposer {
+class ASPDisposer {
   final void Function() _disposer;
 
   /// Remove all listeners of rxObserver;
-  RxDisposer(this._disposer);
+  ASPDisposer(this._disposer);
 
   /// Remove all listeners of rxObserver;
   void call() => _disposer();

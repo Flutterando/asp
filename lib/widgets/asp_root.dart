@@ -2,25 +2,25 @@ part of '../asp.dart';
 
 /// Responsible for propagating Atom values
 /// as a dependency of a child Widget.<br>
-/// RxRoot should be one of the first Widgets in the Flutter tree.
+/// ASPRoot should be one of the first Widgets in the Flutter tree.
 /// ```dart
 /// void main(){
-///   runApp(RxRoot(child: AppWidget()));
+///   runApp(ASPRoot(child: AppWidget()));
 /// }
 /// ```
-class RxRoot extends InheritedWidget {
+class ASPRoot extends InheritedWidget {
   /// Start reducers.
   final List<Reducer>? reducers;
 
   /// Responsible for propagating Atom values
   /// as a dependency of a child Widget.<br>
-  /// RxRoot should be one of the first Widgets in the Flutter tree.
+  /// ASPRoot should be one of the first Widgets in the Flutter tree.
   /// ```dart
   /// void main(){
-  ///   runApp(RxRoot(child: AppWidget()));
+  ///   runApp(ASPRoot(child: AppWidget()));
   /// }
   /// ```
-  const RxRoot({
+  const ASPRoot({
     super.key,
     required super.child,
     this.reducers,
@@ -33,12 +33,12 @@ class RxRoot extends InheritedWidget {
   }) {
     _stackTrace = StackTrace.current;
 
-    _rxMainContext.track();
+    _aspContext.track();
     final value = _resolveTrack(selectFunc());
-    final listenables = _rxMainContext.untrack(_stackTrace);
+    final listenables = _aspContext.untrack(_stackTrace);
 
     final registre = _Register<T>(listenables, filter);
-    final inherited = context.dependOnInheritedWidgetOfExactType<RxRoot>(
+    final inherited = context.dependOnInheritedWidgetOfExactType<ASPRoot>(
       aspect: registre,
     );
     if (inherited == null) {
@@ -69,7 +69,7 @@ class RxRoot extends InheritedWidget {
     void Function(T? value) effectFunc, {
     bool Function()? filter,
   }) {
-    final disposer = rxObserver<T>(
+    final disposer = aspObserver<T>(
       () {
         T? value;
         if (context.mounted) {
@@ -87,7 +87,7 @@ class RxRoot extends InheritedWidget {
       disposer: disposer,
       isCallback: true,
     );
-    final inherited = context.dependOnInheritedWidgetOfExactType<RxRoot>(
+    final inherited = context.dependOnInheritedWidgetOfExactType<ASPRoot>(
       aspect: registre,
     );
     if (inherited == null) {
@@ -117,11 +117,11 @@ class RxRoot extends InheritedWidget {
   }
 
   @override
-  InheritedElement createElement() => _RxRootElement(this);
+  InheritedElement createElement() => _ASPRootElement(this);
 }
 
-class _RxRootElement extends InheritedElement {
-  _RxRootElement(InheritedWidget widget) : super(widget);
+class _ASPRootElement extends InheritedElement {
+  _ASPRootElement(InheritedWidget widget) : super(widget);
 
   bool _dirty = false;
 
@@ -202,7 +202,7 @@ class _Register<T> {
   final Set<Listenable> listenables;
   final mutableCallback = _MutableCallback();
   final bool Function()? filter;
-  final RxDisposer? disposer;
+  final ASPDisposer? disposer;
   final bool isCallback;
 
   _Register(this.listenables, this.filter, {this.isCallback = false, this.disposer});

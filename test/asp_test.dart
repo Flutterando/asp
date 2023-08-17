@@ -21,7 +21,7 @@ void main() {
   test('should dispatch rx value', () {
     final c = Atom<int>(0);
     final list = <int>[];
-    rxObserver(() {
+    aspObserver(() {
       list.add(c.value);
     });
     c.value = 1;
@@ -36,7 +36,7 @@ void main() {
   test('should dispatch rx value and listen effect', () {
     final c = Atom<int>(0);
     final list = <int>[];
-    rxObserver<int>(
+    aspObserver<int>(
       () => c.value,
       effect: (value) {
         list.add(value!);
@@ -52,7 +52,7 @@ void main() {
   test('convert ValueListenable to Rx', () {
     final c = ValueNotifier(0).asAtom();
     final list = <int>[];
-    rxObserver(() {
+    aspObserver(() {
       list.add(c.value);
     });
     c.value = 1;
@@ -66,7 +66,7 @@ void main() {
   test('filter rx', () {
     final c = ValueNotifier(0).asAtom();
     final list = <int>[];
-    rxObserver(
+    aspObserver(
       () {
         list.add(c.value);
       },
@@ -86,7 +86,7 @@ void main() {
     final b = ValueNotifier(0).asAtom();
     final listA = <int>[];
     final listB = <int>[];
-    rxObserver(() {
+    aspObserver(() {
       log('A: ${a.value} | B: ${b.value}');
       listA.add(a.value);
       listB.add(b.value);

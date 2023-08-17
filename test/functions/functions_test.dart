@@ -9,7 +9,7 @@ void main() {
       atom.value++;
     });
 
-    final value = await rxNext(atom);
+    final value = await aspNext(atom);
     expect(value, 1);
   });
 }

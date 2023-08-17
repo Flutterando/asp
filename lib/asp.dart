@@ -15,36 +15,36 @@ part 'async/rx_stream.dart';
 part 'collections/rx_list.dart';
 part 'collections/rx_map.dart';
 part 'collections/rx_set.dart';
-part 'extensions/rx_extensions.dart';
+part 'extensions/asp_extensions.dart';
 part 'functions/functions.dart';
 part 'pipers/debounce_time.dart';
 part 'pipers/distinct.dart';
 part 'pipers/interval.dart';
 part 'pipers/multi_pipe.dart';
 part 'pipers/throttle_time.dart';
-part 'widgets/rx_builder.dart';
-part 'widgets/rx_callback.dart';
-part 'widgets/rx_root.dart';
+part 'widgets/asp_builder.dart';
+part 'widgets/asp_callback.dart';
+part 'widgets/asp_root.dart';
 
 /// Used in [Atom.pipe] propetie
 typedef PipeCallback<T> = void Function(T value, void Function(T value) emit);
 
-final _rxMainContext = _RxContext();
+final _aspContext = _InternalContext();
 
 /// Tracker of all atom`s changes;
 class AtomObserver {
   AtomObserver._();
 
-  static void Function(RxValueListenable atom)? _dispatcher;
+  static void Function(ValueListenableAtom atom)? _dispatcher;
 
   /// Changes Dispatcher Register
-  static void changes(void Function(RxValueListenable atom)? dispatcher) {
+  static void changes(void Function(ValueListenableAtom atom)? dispatcher) {
     _dispatcher = dispatcher;
   }
 }
 
 /// An interface for subclasses of [Listenable] that expose a [value].
-abstract class RxValueListenable<T> implements ValueListenable<T> {
+abstract class ValueListenableAtom<T> implements ValueListenable<T> {
   /// Wait the next change of a [Atom].
   /// The [timeLimit] is 10 seconds by default.
   Future<T> next({
@@ -65,12 +65,12 @@ abstract class RxValueListenable<T> implements ValueListenable<T> {
 
 /// Extension to ValueNotifier by transparently applying
 /// functional reactive programming (TFRP).
-class Atom<T> extends ValueNotifier<T> implements RxValueListenable<T> {
+class Atom<T> extends ValueNotifier<T> implements ValueListenableAtom<T> {
   @override
   T get value {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     if (_value is Listenable) {
-      _rxMainContext.reportRead(super.value as Listenable);
+      _aspContext.reportRead(super.value as Listenable);
     }
     return _value;
   }
@@ -89,16 +89,16 @@ class Atom<T> extends ValueNotifier<T> implements RxValueListenable<T> {
     this.key = key ?? 'Atom:$hashCode';
   }
 
-  /// Factory that return a Atom<RxVoid> instance.
+  /// Factory that return a Atom<PipeVoid> instance.
   /// ```dart
-  /// Atom<RxVoid>(rxVoid); => Atom.action();
+  /// Atom<PipeVoid>(pipeVoid); => Atom.action();
   /// ```
-  static Atom<RxVoid> action({
+  static Atom<PipeVoid> action({
     String? key,
-    PipeCallback<RxVoid>? pipe,
+    PipeCallback<PipeVoid>? pipe,
   }) {
     return Atom(
-      rxVoid,
+      pipeVoid,
       key: key,
       pipe: pipe,
     );
@@ -131,7 +131,7 @@ class Atom<T> extends ValueNotifier<T> implements RxValueListenable<T> {
   Future<T> next({
     Duration timeLimit = const Duration(seconds: 10),
   }) {
-    return rxNext<T>(
+    return aspNext<T>(
       this,
       timeLimit: timeLimit,
     );
@@ -142,7 +142,7 @@ class Atom<T> extends ValueNotifier<T> implements RxValueListenable<T> {
     final completer = Completer<List<T>>();
     final values = <T>[];
 
-    final disposable = rxObserver<T>(
+    final disposable = aspObserver<T>(
       () => value,
       effect: (_) {
         values.add(_value);
@@ -188,20 +188,20 @@ class Atom<T> extends ValueNotifier<T> implements RxValueListenable<T> {
 /// onPressed: () => increment();
 /// ```
 abstract class Reducer {
-  final _rxDisposers = <RxDisposer>[];
+  final _disposers = <ASPDisposer>[];
 
   /// reducer register:
   /// ```dart
   /// on(() => [state], _incrementReducer);
   /// ```
   void on(
-    List<Object?> Function() rxValues,
+    List<Object?> Function() values,
     void Function() reducer, {
     bool Function()? filter,
   }) {
-    final rxDisposer = rxObserver<void>(
+    final observer = aspObserver<void>(
       () {
-        for (final value in rxValues()) {
+        for (final value in values()) {
           if (value is Atom) {
             value.value;
           }
@@ -210,28 +210,28 @@ abstract class Reducer {
       effect: (_) => reducer(),
       filter: filter,
     );
-    _rxDisposers.add(rxDisposer);
+    _disposers.add(observer);
   }
 
   /// dispose all registers
   void dispose() {
-    for (final disposer in _rxDisposers) {
+    for (final disposer in _disposers) {
       disposer();
     }
-    _rxDisposers.clear();
+    _disposers.clear();
   }
 }
 
 /// Void return
-class RxVoid {
+class PipeVoid {
   /// Void return
-  const RxVoid();
+  const PipeVoid();
 }
 
 /// Void return
-const rxVoid = RxVoid();
+const pipeVoid = PipeVoid();
 
-class _RxContext {
+class _InternalContext {
   bool isTracking = false;
   final List<Set<Listenable>> _listOfListenable = [];
 
@@ -255,7 +255,7 @@ class _RxContext {
         .firstWhere(
           (frame) =>
               !frame.contains('new RxBuilder') && //
-              !frame.contains('rxObserver'),
+              !frame.contains('aspObserver'),
           orElse: () => '',
         );
 

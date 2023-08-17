@@ -8,7 +8,7 @@ part of '../asp.dart';
     'supported by this package as they violate the ASP standard. '
     'It is better to use a pure [Atom] synchronously '
     'to understand the flow of reactivity.')
-class RxSet<T> extends ChangeNotifier with SetMixin<T> implements RxValueListenable<RxSet<T>> {
+class RxSet<T> extends ChangeNotifier with SetMixin<T> implements ValueListenableAtom<RxSet<T>> {
   late final Set<T> _set;
   @override
   late final String key;
@@ -57,13 +57,13 @@ class RxSet<T> extends ChangeNotifier with SetMixin<T> implements RxValueListena
 
   @override
   Iterator<T> get iterator {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _set.iterator;
   }
 
   @override
   int get length {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _set.length;
   }
 
@@ -96,7 +96,7 @@ class RxSet<T> extends ChangeNotifier with SetMixin<T> implements RxValueListena
   Future<RxSet<T>> next({
     Duration timeLimit = const Duration(seconds: 10),
   }) {
-    return rxNext<RxSet<T>>(
+    return aspNext<RxSet<T>>(
       this,
       timeLimit: timeLimit,
     );
@@ -104,7 +104,7 @@ class RxSet<T> extends ChangeNotifier with SetMixin<T> implements RxValueListena
 
   @override
   RxSet<T> get value {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return this;
   }
 

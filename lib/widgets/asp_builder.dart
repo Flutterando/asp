@@ -14,7 +14,7 @@ part of '../asp.dart';
 ///     );
 /// }
 /// ```
-class RxBuilder extends StatelessWidget with _RxMixin {
+class ASPBuilder extends StatelessWidget with _ASPMixin {
   /// All [Atom] used in this function will be automatically
   /// signed and this function will be called every
   /// time the value of an [Atom] changes.
@@ -35,7 +35,7 @@ class RxBuilder extends StatelessWidget with _RxMixin {
   ///     );
   /// }
   /// ```
-  RxBuilder({
+  ASPBuilder({
     Key? key,
     required this.builder,
     bool Function()? filter,
@@ -53,14 +53,14 @@ class RxBuilder extends StatelessWidget with _RxMixin {
   }
 }
 
-mixin _RxMixin on StatelessWidget {
+mixin _ASPMixin on StatelessWidget {
   bool filter() => true;
 
   @override
   StatelessElement createElement() => _StatelessMixInElement2(this);
 }
 
-class _StatelessMixInElement2<W extends _RxMixin> extends StatelessElement with _NotifierElement2 {
+class _StatelessMixInElement2<W extends _ASPMixin> extends StatelessElement with _NotifierElement2 {
   _StatelessMixInElement2(
     W widget,
   ) : super(widget);
@@ -75,7 +75,7 @@ mixin _NotifierElement2 on ComponentElement {
   Listenable? listenable;
 
   void invalidate() {
-    if ((widget as _RxMixin).filter()) {
+    if ((widget as _ASPMixin).filter()) {
       markNeedsBuild();
     }
   }
@@ -84,10 +84,10 @@ mixin _NotifierElement2 on ComponentElement {
   Widget build() {
     late Widget child;
     listenable?.removeListener(invalidate);
-    _rxMainContext.track();
+    _aspContext.track();
     child = super.build();
 
-    final listenables = _rxMainContext.untrack(_stackTrace);
+    final listenables = _aspContext.untrack(_stackTrace);
     if (listenables.isNotEmpty) {
       listenable = Listenable.merge(listenables.toList());
     }

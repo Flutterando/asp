@@ -5,7 +5,7 @@ void main() {
   test('rx add', () async {
     final list = RxList(['jacob', 'sara']);
     var addCount = 0;
-    rxObserver(
+    aspObserver(
       () => list.value,
       effect: (val) {
         addCount++;
@@ -28,7 +28,7 @@ void main() {
   test('rx list observer effect', () async {
     final list = Atom(RxList(['jacob', 'sara']));
     var effectHappened = false;
-    rxObserver(
+    aspObserver(
       () => list.value,
       effect: (val) {
         effectHappened = list.value.contains('coco');
@@ -41,7 +41,7 @@ void main() {
   test('replace rxlist and keep reactivity', () async {
     final list = Atom(RxList(['jacob', 'sara']));
     var ignoreFirstReaction = true;
-    rxObserver(
+    aspObserver(
       () => list.value,
       effect: expectAsync1((val) {
         if (ignoreFirstReaction) {

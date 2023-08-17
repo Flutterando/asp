@@ -9,7 +9,9 @@ part of '../asp.dart';
     'supported by this package as they violate the ASP standard. '
     'It is better to use a pure [Atom] synchronously '
     'to understand the flow of reactivity.')
-class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueListenable<RxMap<K, V>> {
+class RxMap<K, V> extends ChangeNotifier
+    with MapMixin<K, V>
+    implements ValueListenableAtom<RxMap<K, V>> {
   late final Map<K, V> _map;
   @override
   late final String key;
@@ -53,7 +55,7 @@ class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueL
 
   @override
   V? operator [](Object? key) {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _map[key];
   }
 
@@ -71,7 +73,7 @@ class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueL
 
   @override
   Iterable<K> get keys {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _map.keys;
   }
 
@@ -88,7 +90,7 @@ class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueL
   Future<RxMap<K, V>> next({
     Duration timeLimit = const Duration(seconds: 10),
   }) {
-    return rxNext<RxMap<K, V>>(
+    return aspNext<RxMap<K, V>>(
       this,
       timeLimit: timeLimit,
     );
@@ -96,7 +98,7 @@ class RxMap<K, V> extends ChangeNotifier with MapMixin<K, V> implements RxValueL
 
   @override
   RxMap<K, V> get value {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return this;
   }
 

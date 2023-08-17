@@ -8,7 +8,7 @@ void main() {
     final rxFuture = getCounterFuture(1).asAtom();
     final completer = Completer();
     var number = 0;
-    rxObserver(() {
+    aspObserver(() {
       if (rxFuture.status == FutureStatus.pending) {
         return;
       }
@@ -23,7 +23,7 @@ void main() {
     final rxFuture = getCounterFuture(1).asAtom();
     final completer = Completer();
     final list = [];
-    rxObserver(() {
+    aspObserver(() {
       if (rxFuture.status == FutureStatus.pending) {
         return;
       }

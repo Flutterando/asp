@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'pages/counter_page.dart';
 
 void main() {
-  runApp(RxRoot(child: MyApp()));
+  runApp(ASPRoot(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

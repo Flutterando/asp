@@ -9,7 +9,7 @@ part of '../asp.dart';
     'supported by this package as they violate the ASP standard. '
     'It is better to use a pure [Atom] synchronously '
     'to understand the flow of reactivity.')
-class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListenable<RxList<T>> {
+class RxList<T> extends ChangeNotifier with ListMixin<T> implements ValueListenableAtom<RxList<T>> {
   late final List<T> _list;
   @override
   late final String key;
@@ -35,55 +35,55 @@ class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListe
 
   @override
   int get length {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.length;
   }
 
   @override
   T get first {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.first;
   }
 
   @override
   T get last {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.last;
   }
 
   @override
   Iterable<T> get reversed {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.reversed;
   }
 
   @override
   bool get isEmpty {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.isEmpty;
   }
 
   @override
   bool get isNotEmpty {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.isNotEmpty;
   }
 
   @override
   Iterator<T> get iterator {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.iterator;
   }
 
   @override
   T get single {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.single;
   }
 
   @override
   Iterable<T> getRange(int start, int end) {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.getRange(start, end);
   }
 
@@ -184,31 +184,31 @@ class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListe
 
   @override
   List<T> sublist(int start, [int? end]) {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.sublist(start, end);
   }
 
   @override
   T singleWhere(bool Function(T) test, {T Function()? orElse}) {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.singleWhere(test, orElse: orElse);
   }
 
   @override
   Iterable<T> skip(int count) {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.skip(count);
   }
 
   @override
   Iterable<T> skipWhile(bool Function(T) test) {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list.skipWhile(test);
   }
 
   @override
   void forEach(void Function(T) action) {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     _list.forEach(action);
   }
 
@@ -229,13 +229,13 @@ class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListe
   @override
   List<T> operator +(List<T> other) {
     final newList = _list + other;
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return newList;
   }
 
   @override
   T operator [](int index) {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return _list[index];
   }
 
@@ -255,7 +255,7 @@ class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListe
   Future<RxList<T>> next({
     Duration timeLimit = const Duration(seconds: 10),
   }) {
-    return rxNext<RxList<T>>(
+    return aspNext<RxList<T>>(
       this,
       timeLimit: timeLimit,
     );
@@ -263,7 +263,7 @@ class RxList<T> extends ChangeNotifier with ListMixin<T> implements RxValueListe
 
   @override
   RxList<T> get value {
-    _rxMainContext.reportRead(this);
+    _aspContext.reportRead(this);
     return this;
   }
 

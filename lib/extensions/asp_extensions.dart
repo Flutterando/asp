@@ -54,25 +54,25 @@ extension RxMapExtension<K, V> on Map<K, V> {
 
 /// Propagates the changes of the Atom placed in the
 /// body function in this widget.<br>
-/// To use this feature, you need to add [RxRoot]
+/// To use this feature, you need to add [ASPRoot]
 /// at the beginning of your application's Widget tree.
 extension ContextSelectionExtension on BuildContext {
   /// Propagates the changes of the Atom placed in the
   /// body function in this widget.<br>
-  /// To use this feature, you need to add [RxRoot]
+  /// To use this feature, you need to add [ASPRoot]
   /// at the beginning of your application's Widget tree.
   T select<T>(T Function() selectFunc, {bool Function()? filter}) {
-    return RxRoot._select<T>(this, selectFunc, filter: filter);
+    return ASPRoot._select<T>(this, selectFunc, filter: filter);
   }
 
   /// Used to assign effect functions that will react to the
   /// reactivity of the declared Atom,
-  /// similar to the [rxObserver] function.
+  /// similar to the [aspObserver] function.
   void callback<T>(
     T Function() selectFunc,
     void Function(T? value) effectFunc, {
     bool Function()? filter,
   }) {
-    return RxRoot._callback(this, selectFunc, effectFunc, filter: filter);
+    return ASPRoot._callback(this, selectFunc, effectFunc, filter: filter);
   }
 }

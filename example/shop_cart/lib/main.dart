@@ -13,7 +13,7 @@ void main() {
   injector.addSingleton(BurgReducer.new);
   injector.commit();
 
-  runApp(const RxRoot(child: MyApp()));
+  runApp(const ASPRoot(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

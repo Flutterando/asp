@@ -3,7 +3,7 @@ import 'package:asp/asp.dart';
 import '../models/burg_model.dart';
 
 // atoms
-final burgs = RxList<BurgModel>([]);
+final burgs = <BurgModel>[].asAtom();
 final burgLoading = Atom(true);
 
 // actions

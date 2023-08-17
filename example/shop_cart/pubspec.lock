@@ -31,7 +31,7 @@ packages:
       path: "../.."
       relative: true
     source: path
-    version: "1.1.0"
+    version: "1.2.0"
   async:
     dependency: transitive
     description:
@@ -180,10 +180,10 @@ packages:
     dependency: transitive
     description:
       name: file
-      sha256: "5fc22d7c25582e38ad9a8515372cd9a93834027aacf1801cf01164dac0ffa08c"
+      sha256: "1b92bec4fc2a72f59a8e15af5f52cd441e4a7860b49499d69dfa817af20e925d"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.0"
+    version: "6.1.4"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -419,10 +419,10 @@ packages:
     dependency: "direct main"
     description:
       name: uno
-      sha256: c96df7dde98338f95bf876e984f87be53ec05d33b40ab50865712ed5bd920bb4
+      sha256: dd00f8f51907139132addef07b97b5a2b0d19788f116995ec86dca64e57eae8e
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.9"
   vector_math:
     dependency: transitive
     description:
