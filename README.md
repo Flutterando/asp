@@ -1,7 +1,6 @@
 # ASP - Atomic State Pattern
 
-The [ValueNotifier](https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html) is a simple, native form of Flutter reactivity.
-This extension aims to transparently apply **functional reactive programming (TFRP)**.
+ASP (Atomic State Pattern) offers a simplified and modularized approach to state management for Flutter.
 
 ## Install
 
@@ -9,30 +8,17 @@ This extension aims to transparently apply **functional reactive programming (TF
 flutter pub add asp
 ```
 
-## Understanding Extension.
+## About
 
-This extension adds a class **Atom** and a converter **ValueNotifier -> Atom** so that it can be observed transparently by the function **rxObserver()** and [Widget](https://api.flutter.dev/flutter/widgets/Widget-class.html) **RxBuilder**.
+The ASP approach divides state management into "atoms" and "reducers". Atoms are the smallest units of state, while reducers listen for changes on specific atoms and react to them, potentially causing side effects or updating other atoms.
 
-The **Atom** is directly an extension of [ValueListenable](https://api.flutter.dev/flutter/foundation/ValueListenable-class.html) then any object that implements it can be converted to **Atom**
+## How to Use
 
-The only difference from **Atom** to [ValueNotifier](https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html) is the automatic signature function in Observers **rxObserver()** and **RxBuilder**, very similar to [MobX reactions](https://pub.dev/packages/mobx).
-
-## Using
-
-To start, instantiate an Atom.
+An Atom is a unit of state that can be listened to for changes.
 
 ```dart
 final counter = Atom<int>(0);
 ```
-
-or convert a  [ValueNotifier](https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html) already existing using the **.asAtom()** method:
-
-```dart
-
-final counter = myValueNotifierCounter.asAtom();
-
-```
-> **IMPORTANT**: The **Atom()** method has been added to [ValueNotifier](https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html) using [Extension Methods](https://dart.dev/guides/language/extension-methods).
 
 
 And listen the changes using **rxObserver**:

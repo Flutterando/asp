@@ -1,5 +1,5 @@
 name: asp
-description: ASP (Atomic State Pattern) is a extension to ValueNotifier by transparently applying functional reactive programming (TFRP)
+description: ASP (Atomic State Pattern) offers a simplified and modularized approach to state management for Flutter.
 version: 1.2.0
 homepage: https://github.com/Flutterando/asp
 
