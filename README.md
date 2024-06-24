@@ -51,9 +51,9 @@ increment();
 ```
 
 This simple limitation provides significant predictability in state propagation. The scope of **AtomAction** contains the **set** property, which is the only way to update a state. You can have **AtomAction** with up to 3 parameters:
-- atomAction1
-- atomAction2
-- atomAction3
+- `atomAction1`
+- `atomAction2`
+- `atomAction3`
 
 Example:
 ```dart
@@ -72,7 +72,7 @@ counterAction('INCREMENT');
 
 This versatility allows for a simple common call, a pub-sub mechanism, or even turning an action into a state reducer, making everything more interesting.
 
-## Combine multiple Atoms with SELECTORS
+## Combine multiple Atoms with `SELECTORS`
 
 Managing state distribution and converging multiple states into a new one was a major challenge in the case study that led to the creation of **ASP**. We introduced a very simple way to combine multiple **Atoms** and compute a new value whenever any of them changes, using **AtomSelector**.
 
@@ -171,7 +171,8 @@ To effectively use this approach, consider these architectural limits:
 
 ## Learn more about ASP
 
-This is just the beginning of a world of possibilities! Check out the [official documentation](https://asp.flutterando.com.br) for much more!
+This is just the beginning of a world of possibilities!<br>
+Check out the [official documentation](https://asp.flutterando.com.br) for much more!
 
 ## Examples
 
