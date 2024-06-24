@@ -1,4 +1,4 @@
-part of '../asp.dart';
+part of '../../asp.dart';
 
 /// Emits a notification from an [Atom], then ignores subsequent
 /// source values for duration milliseconds,
@@ -9,7 +9,9 @@ part of '../asp.dart';
 ///      pipe: throttleTime()
 /// );
 /// ```
-PipeCallback<T> throttleTime<T>([Duration duration = const Duration(milliseconds: 500)]) {
+PipeCallback<T> throttleTime<T>([
+  Duration duration = const Duration(milliseconds: 500),
+]) {
   return _ThrottleTime<T>(duration: duration).pipe;
 }
 

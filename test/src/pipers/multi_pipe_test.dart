@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('multi pipe ...', () {
-    final atom = Atom<String>(
+    final textState = atom<String>(
       'n',
       pipe: multiPipe([
         (value, emit) {
@@ -25,8 +25,10 @@ void main() {
       ]),
     );
 
-    expect(atom.next(), completion('fa1234'));
+    expect(textState.next(), completion('fa1234'));
 
-    atom.value = 'fa';
+    atomAction((set) {
+      set(textState, 'fa');
+    })();
   });
 }

@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 
 import '../atoms/counter.dart';
 
-class CounterPage extends StatelessWidget {
+class CounterPage extends StatelessWidget with HookMixin {
   const CounterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final value = context.select(() => counterState.value);
+    final value = useAtomState(counterState);
 
     return Scaffold(
       body: Center(
@@ -26,7 +26,7 @@ class CounterPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                countText,
+                parityState.state,
                 style: const TextStyle(fontSize: 40),
               ),
               Text(
@@ -39,7 +39,7 @@ class CounterPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => counterState.value++,
+        onPressed: () => counterAction('increment'),
       ),
     );
   }

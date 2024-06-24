@@ -1,4 +1,4 @@
-part of '../asp.dart';
+part of '../../asp.dart';
 
 /// Concat many pipes.
 /// ```dart

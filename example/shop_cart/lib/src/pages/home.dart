@@ -3,7 +3,6 @@ import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 
 import '../atom/burg_atom.dart';
-import '../atom/cart_atom.dart';
 import '../widgets/burg_card.dart';
 import '../widgets/cart_drawer.dart';
 
@@ -14,19 +13,21 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with HookStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   ScaffoldState get scaffoldState => scaffoldKey.currentState!;
 
   @override
   void initState() {
     super.initState();
-    fetchBurgs();
+    burgsAction('fetchAll');
   }
 
   @override
   Widget build(BuildContext context) {
-    context.select(() => [burgs, burgLoading, cartBurgs]);
+    final burgs = useAtomState(burgsState);
+    final isLoading = useAtomState(burgLoadingState);
+    final cartBurgs = useAtomState(cartBurgsState);
 
     return Scaffold(
       key: scaffoldKey,
@@ -48,12 +49,12 @@ class _HomePageState extends State<HomePage> {
               return BurgCard(
                 model: model,
                 onTap: () {
-                  addBurg.setValue(model);
+                  addCartBurgAction(model);
                 },
               );
             },
           ),
-          if (burgLoading.value)
+          if (isLoading)
             const Align(
               alignment: Alignment.topCenter,
               child: LinearProgressIndicator(),

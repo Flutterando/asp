@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 import '../atoms/counter.dart';
 
-class OtherPage extends StatelessWidget {
+class OtherPage extends StatelessWidget with HookMixin {
   @override
   Widget build(BuildContext context) {
-    final value = context.select(() => counterState.value);
+    final state = useAtomState(counterState);
 
     return Scaffold(
       appBar: AppBar(),
@@ -15,11 +15,11 @@ class OtherPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              countText,
+              parityState.state,
               style: TextStyle(fontSize: 40),
             ),
             Text(
-              '$value',
+              '$state',
               style: TextStyle(fontSize: 23),
             ),
           ],
@@ -27,7 +27,7 @@ class OtherPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.remove),
-        onPressed: () => counterState.value--,
+        onPressed: () => counterAction('decrement'),
       ),
     );
   }

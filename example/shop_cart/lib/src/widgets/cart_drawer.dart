@@ -1,14 +1,17 @@
 import 'package:asp/asp.dart';
+import 'package:example/src/atom/burg_atom.dart';
 import 'package:flutter/material.dart';
 
-import '../atom/cart_atom.dart';
-
-class CartDrawer extends StatelessWidget {
+class CartDrawer extends StatelessWidget with HookMixin {
   const CartDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    context.callback(() => cartBurgs.length, (value) {
+    final cartBurgs = useAtomState(cartBurgsState);
+    final cartTotal = useAtomState(cartTotalState);
+
+    useAtomEffect((get) {
+      final cartBurgs = get(cartBurgsState);
       if (cartBurgs.isEmpty) {
         if (context.mounted) {
           Navigator.of(context).maybePop();
@@ -16,7 +19,6 @@ class CartDrawer extends StatelessWidget {
       }
     });
 
-    context.select(() => [cartBurgs.length, finalValue.value]);
     return Drawer(
       width: 240,
       child: Padding(
@@ -50,7 +52,7 @@ class CartDrawer extends StatelessWidget {
                     trailing: IconButton(
                       icon: const Icon(Icons.remove_circle_outline_rounded),
                       onPressed: () {
-                        removeBurg.setValue(model);
+                        removeBurgCartAction(model);
                       },
                     ),
                   );
@@ -63,7 +65,7 @@ class CartDrawer extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Valor: ${finalValue.value}',
+                  'Valor: ${cartTotal}',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -75,9 +77,7 @@ class CartDrawer extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () {
-                cleanCart();
-              },
+              onPressed: () => cleanCartAction(),
               child: const Text('Limpar sacola'),
             ),
           ],

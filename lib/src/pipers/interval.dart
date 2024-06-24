@@ -1,4 +1,4 @@
-part of '../asp.dart';
+part of '../../asp.dart';
 
 /// Emits a notification from an Atom
 /// after a given duration.
@@ -8,7 +8,9 @@ part of '../asp.dart';
 ///      pipe: interval()
 /// );
 /// ```
-PipeCallback<T> interval<T>([Duration duration = const Duration(milliseconds: 500)]) {
+PipeCallback<T> interval<T>([
+  Duration duration = const Duration(milliseconds: 500),
+]) {
   return _Interval<T>(duration: duration).pipe;
 }
 
@@ -31,7 +33,9 @@ class _Interval<T> {
 
   void _addNext(void Function(T newValue) emit) {
     if (_queue.isNotEmpty) {
-      _addDelayed(_queue.removeFirst(), emit).whenComplete(() => _addNext(emit));
+      _addDelayed(_queue.removeFirst(), emit).whenComplete(() {
+        _addNext(emit);
+      });
     }
   }
 

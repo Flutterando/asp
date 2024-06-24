@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:uno/uno.dart';
 
 import 'src/pages/home.dart';
-import 'src/reducers/burg_reducer.dart';
 import 'src/services/burg_service.dart';
 
 void main() {
   injector.addInstance(Uno());
   injector.add(BurgService.new);
-  injector.addSingleton(BurgReducer.new);
   injector.commit();
-
-  runApp(const RxRoot(child: MyApp()));
+  AtomObserver.changes((status) {
+    print(status);
+  });
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -1,4 +1,4 @@
-part of '../asp.dart';
+part of '../../asp.dart';
 
 /// Emits a notification from an Atom only after
 /// a specified period of time has passed without
@@ -9,7 +9,9 @@ part of '../asp.dart';
 ///      pipe: debounceTime()
 /// );
 /// ```
-PipeCallback<T> debounceTime<T>([Duration duration = const Duration(milliseconds: 500)]) {
+PipeCallback<T> debounceTime<T>([
+  Duration duration = const Duration(milliseconds: 500),
+]) {
   return _DebounceTime<T>(duration: duration).pipe;
 }
 

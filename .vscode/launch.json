@@ -6,8 +6,15 @@
     "configurations": [
        
         {
-            "name": "example",
-            "cwd": "example",
+            "name": "shop_cart",
+            "cwd": "example/shop_cart",
+            "request": "launch",
+            "type": "dart"
+        },
+
+        {
+            "name": "trivial_counter",
+            "cwd": "example/trivial_counter",
             "request": "launch",
             "type": "dart"
         }

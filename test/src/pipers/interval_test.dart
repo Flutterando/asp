@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Atom interval', () {
-    final atom = Atom<String>(
+    final textState = atom<String>(
       'Test',
       pipe: interval(const Duration(seconds: 1)),
     );
@@ -11,7 +11,7 @@ void main() {
     final start = DateTime.now();
 
     final diff = expectLater(
-      atom.buffer(5),
+      textState.buffer(5),
       completion([
         'j',
         'ja',
@@ -23,10 +23,12 @@ void main() {
 
     expect(diff, completion(5));
 
-    atom.value = 'j';
-    atom.value = 'ja';
-    atom.value = 'jac';
-    atom.value = 'jaco';
-    atom.value = 'jacob';
+    atomAction((set) {
+      set(textState, 'j');
+      set(textState, 'ja');
+      set(textState, 'jac');
+      set(textState, 'jaco');
+      set(textState, 'jacob');
+    })();
   });
 }
