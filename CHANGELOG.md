@@ -205,7 +205,7 @@ class CounterPage extends StatelessWidget with HookMixin {
 
 All support is free in Brazil's largest Flutter community, Flutterando. Join us on [Discord](https://asp.flutterando.com.br).
 
-Let's set the standard together!
+Let's set the pattern together!
 
 
 ## [1.2.0] - 2023-07-16
