@@ -179,7 +179,10 @@ class CounterPage extends StatelessWidget with HookMixin {
 
   @override
   Widget build(BuildContext context) {
-    final value = useAtomState(counterState);
+    //listen atom
+    final state = useAtomState(counterState);
+
+    // listen and call function
     useAtomEffect(
         (get) => get(counterState),
         effect: callSnackBar,
