@@ -47,7 +47,7 @@ class CounterPage extends StatelessWidget with HookMixin {
 
 :::tip[NOTE]
 
-**ASP** uses the [hook_state]('https://pub.dev/hook_state') package, therefore, the other hooks are
+**ASP** uses the [hook_state](https://pub.dev/packages/hook_state) package, therefore, the other hooks are
 available. <br></br>
 Unlike **flutter_hook**, which is excellent but invasive, we use **hook_state** that doesn’t require changing **widgets**. Just add a mixin and you’re ready to go.
 
