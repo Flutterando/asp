@@ -9,18 +9,19 @@ part of '../../asp.dart';
 ///      pipe: throttleTime()
 /// );
 /// ```
-PipeCallback<T> throttleTime<T>([
+AtomPipe<T> throttleTime<T>([
   Duration duration = const Duration(milliseconds: 500),
 ]) {
-  return _ThrottleTime<T>(duration: duration).pipe;
+  return _ThrottleTime<T>(duration: duration);
 }
 
-class _ThrottleTime<T> {
+class _ThrottleTime<T> extends AtomPipe<T> {
   DateTime? lastEmit;
   final Duration duration;
 
   _ThrottleTime({required this.duration});
 
+  @override
   void pipe(T value, void Function(T newValue) emit) {
     final now = DateTime.now();
 
@@ -35,4 +36,7 @@ class _ThrottleTime<T> {
     }
     lastEmit = now;
   }
+
+  @override
+  void init(T value, void Function(T value) emit) {}
 }

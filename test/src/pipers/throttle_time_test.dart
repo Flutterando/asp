@@ -5,7 +5,7 @@ void main() {
   test('Atom throttle', () async {
     final textState = atom<String>(
       '',
-      pipe: throttleTime(),
+      pipes: [throttleTime()],
     );
 
     expect(textState.buffer(3), completion(['j', 'jac', 'jacob']));

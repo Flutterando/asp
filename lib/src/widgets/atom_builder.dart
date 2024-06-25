@@ -5,7 +5,6 @@ part of '../../asp.dart';
 /// [builder]: All [Atom] used in this function will be automatically
 /// signed and this function will be called every
 /// time the value of an [Atom] changes.
-/// [filter]: Filter reactions and prevent unwanted effects.<br>
 ///
 /// ```dart
 /// Widget build(BuildContext context){

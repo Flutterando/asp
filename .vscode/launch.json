@@ -4,14 +4,19 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-       
+
+        {
+            "name": "basic_usage",
+            "cwd": "example/basic_usage",
+            "request": "launch",
+            "type": "dart"
+        },
         {
             "name": "shop_cart",
             "cwd": "example/shop_cart",
             "request": "launch",
             "type": "dart"
         },
-
         {
             "name": "trivial_counter",
             "cwd": "example/trivial_counter",

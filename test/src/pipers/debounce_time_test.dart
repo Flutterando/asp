@@ -5,7 +5,7 @@ void main() {
   test('Atom debounce', () async {
     final textState = atom<String>(
       'Test',
-      pipe: debounceTime(),
+      pipes: [debounceTime()],
     );
 
     expect(textState.buffer(3), completion(['ja', 'jaco', 'jacob']));

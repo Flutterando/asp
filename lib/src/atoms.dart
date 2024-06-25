@@ -66,7 +66,7 @@ sealed class Atom<T> extends ChangeNotifier {
   final String key;
 
   /// Transforms the set value.
-  final PipeCallback<T>? _pipe;
+  final List<AtomPipe<T>> _pipes;
 
   /// The current value stored in this notifier.
   T get state => _state;
@@ -79,30 +79,54 @@ sealed class Atom<T> extends ChangeNotifier {
   factory Atom.selector(
     SelectorFunction<T> scope, {
     String? key,
-    PipeCallback<T>? pipe,
+    List<AtomPipe<T>> pipes = const [],
   }) {
     final fixKey = key ?? 'Selector($T)';
-    return _AtomSelector<T>(scope, fixKey, pipe);
+    return _AtomSelector<T>(scope, fixKey, pipes);
   }
 
   factory Atom.asyncSelector(
     T state,
     AsyncSelectorFunction<T> scope, {
     String? key,
-    PipeCallback<T>? pipe,
+    List<AtomPipe<T>> pipes = const [],
   }) {
     final fixKey = key ?? 'AsyncSelector($T)';
-    return _AsyncAtomSelector<T>(state, scope, key: fixKey, pipe: pipe);
+    return _AsyncAtomSelector<T>(state, scope, key: fixKey, pipes: pipes);
   }
 
-  Atom._(this.key, this._pipe, this._distinct);
+  Atom._(this.key, this._pipes, this._distinct) {
+    _initPipes();
+  }
+
+  void _initPipes() {
+    if (_pipes.isEmpty) return;
+    final emit = _pipes.fold<void Function(T)>((state) {
+      _changeValue(state, '$key@pipeInit');
+    }, (prev, pipe) {
+      return (state) {
+        pipe.init(state, prev);
+      };
+    });
+
+    emit(_state);
+  }
 
   void _setState(T newValue, String keyAction) {
-    if (_pipe == null) {
+    if (_pipes.isEmpty) {
       _changeValue(newValue, keyAction);
-    } else {
-      _pipe!.call(newValue, (v) => _changeValue(v, keyAction));
+      return;
     }
+
+    final emit = _pipes.fold<void Function(T)>((state) {
+      _changeValue(state, '$key@pipe');
+    }, (prev, pipe) {
+      return (state) {
+        pipe.pipe(state, prev);
+      };
+    });
+
+    emit(newValue);
   }
 
   void _changeValue(T newValue, String keyAction) {
@@ -144,11 +168,11 @@ class _Atom<T> extends Atom<T> {
   _Atom(
     this._state, {
     required String key,
-    PipeCallback<T>? pipe,
+    List<AtomPipe<T>> pipes = const [],
     bool distinct = true,
   }) : super._(
           key,
-          pipe,
+          pipes,
           distinct,
         );
 }

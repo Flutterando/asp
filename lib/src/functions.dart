@@ -23,8 +23,12 @@ part of '../asp.dart';
 ///
 /// disposable();
 /// ```
-Atom<T> atom<T>(T state, {String? key, PipeCallback<T>? pipe}) {
-  return _Atom<T>(state, key: key ?? 'Atom($T)', pipe: pipe);
+Atom<T> atom<T>(
+  T state, {
+  String? key,
+  List<AtomPipe<T>> pipes = const [],
+}) {
+  return _Atom<T>(state, key: key ?? 'Atom($T)', pipes: pipes);
 }
 
 /// Creates a selector [Atom] that derives its state from other Atoms.<br>
@@ -41,9 +45,9 @@ Atom<T> atom<T>(T state, {String? key, PipeCallback<T>? pipe}) {
 Atom<T> selector<T>(
   SelectorFunction<T> scope, {
   String? key,
-  PipeCallback<T>? pipe,
+  List<AtomPipe<T>> pipes = const [],
 }) {
-  return Atom<T>.selector(scope, key: key, pipe: pipe);
+  return Atom<T>.selector(scope, key: key, pipes: pipes);
 }
 
 /// Creates an asynchronous selector [Atom] that derives its state from
@@ -66,9 +70,9 @@ Atom<T> asyncSelector<T>(
   T state,
   AsyncSelectorFunction<T> scope, {
   String? key,
-  PipeCallback<T>? pipe,
+  List<AtomPipe<T>> pipes = const [],
 }) {
-  return Atom<T>.asyncSelector(state, scope, key: key, pipe: pipe);
+  return Atom<T>.asyncSelector(state, scope, key: key, pipes: pipes);
 }
 
 /// An [Atom] can only be modified within an [AtomAction].<br>

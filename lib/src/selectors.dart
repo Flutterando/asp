@@ -10,8 +10,8 @@ class _AtomSelector<T> extends Atom<T> {
   _AtomSelector(
     this._selector,
     String key,
-    PipeCallback<T>? pipe,
-  ) : super._(key, pipe, true) {
+    List<AtomPipe<T>> pipes,
+  ) : super._(key, pipes, true) {
     _get = GetState._();
     _get._selectorNotifyListeners = () {
       _setState(_selector(_get), key);
@@ -59,8 +59,8 @@ class _AsyncAtomSelector<T> extends Atom<T> {
     this._state,
     this._scope, {
     required String key,
-    PipeCallback<T>? pipe,
-  }) : super._(key, pipe, true);
+    List<AtomPipe<T>> pipes = const [],
+  }) : super._(key, pipes, true);
 
   /// Processes the request queue, ensuring only one request is
   /// processed at a time.

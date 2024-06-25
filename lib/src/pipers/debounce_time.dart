@@ -9,18 +9,22 @@ part of '../../asp.dart';
 ///      pipe: debounceTime()
 /// );
 /// ```
-PipeCallback<T> debounceTime<T>([
+AtomPipe<T> debounceTime<T>([
   Duration duration = const Duration(milliseconds: 500),
 ]) {
-  return _DebounceTime<T>(duration: duration).pipe;
+  return _DebounceTime<T>(duration: duration);
 }
 
-class _DebounceTime<T> {
+class _DebounceTime<T> implements AtomPipe<T> {
   Timer? timer;
   final Duration duration;
 
   _DebounceTime({required this.duration});
 
+  @override
+  void init(T value, void Function(T value) emit) {}
+
+  @override
   void pipe(T value, void Function(T newValue) emit) {
     timer?.cancel();
 
