@@ -1,6 +1,12 @@
 
 # ASP - Atomic State Pattern
 
+[![Pub Version](https://img.shields.io/pub/v/asp.svg)](https://pub.dev/packages/asp)
+![CI](https://github.com/Flutterando/asp/workflows/CI/badge.svg)
+![LICENSE](https://img.shields.io/hexpm/l/modular)
+[![GitHub stars](https://badgen.net/github/stars/Flutterando/asp)](https://GitHub.com/Flutterando/asp/stargazers/)
+
+
 ![image](/assets/logo.png)
 
 ASP (Atomic State Pattern) offers a simplified, predictable, and powerful state management solution for Flutter.
