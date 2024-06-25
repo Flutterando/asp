@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
 
 jobs:
   build:
@@ -21,10 +22,10 @@ jobs:
         run: flutter pub get
 
       - name: Run Analyze
-        run: flutter analyze --no-fatal-infos
+        run: flutter analyze --no-fatal-infos ./lib ./test
 
       - name: Check format
-        run: dart format --set-exit-if-changed ./lib
+        run: dart format --set-exit-if-changed ./lib ./test
 
       - name: Run tests
         run: flutter test --coverage
