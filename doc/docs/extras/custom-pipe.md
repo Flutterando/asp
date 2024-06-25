@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Custom pipe
 
-We can create our own pipes just by implementing the **AtomPipe<T>** interface.<br></br>
+We can create our own pipes just by implementing the **AtomPipe** interface.<br></br>
 The **init()** method is called when creating **Atom** while the **pipe** method is called when changing
 of State.
 

@@ -6,8 +6,6 @@ sidebar_position: 4
 
 Hooks are special functions that allow a component to connect to the lifecycle of a widget.
 
-We are adding a **hooks** system to subscribe **Atoms** to a **Widget**. Unlike **flutter_hook**, which is excellent but invasive, we use **hook_state** that doesn’t require changing **widgets**. Just add a mixin and you’re ready to go.
-
 We have two hooks:
 1. **useAtomState**: Subscribes to the **Atom** and rebuilds the **Widget** when the state changes.
 2. **useAtomEffect**: Subscribes to one or more **Atoms** and triggers a callback when they change. This does not affect the **Widget’s** state. It is great for executing code like **Snackbar** or **Navigator**.
@@ -46,5 +44,13 @@ class CounterPage extends StatelessWidget with HookMixin {
 ```
 
 **Hooks** manage the lifecycle automatically, so there is no need to worry about memory "releases" like "dispose". A dream come true!
+
+:::tip[NOTE]
+
+**ASP** uses the [hook_state]('https://pub.dev/hook_state') package, therefore, the other hooks are
+available. <br></br>
+Unlike **flutter_hook**, which is excellent but invasive, we use **hook_state** that doesn’t require changing **widgets**. Just add a mixin and you’re ready to go.
+
+:::
 
 
