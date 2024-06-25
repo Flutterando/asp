@@ -2,7 +2,7 @@
 # ASP - Atomic State Pattern
 
 [![Pub Version](https://img.shields.io/pub/v/asp.svg)](https://pub.dev/packages/asp)
-![CI](https://github.com/Flutterando/asp/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/github/Flutterando/asp/graph/badge.svg?token=MR0KTXEHD2)](https://codecov.io/github/Flutterando/asp)
 ![LICENSE](https://img.shields.io/hexpm/l/modular)
 [![GitHub stars](https://badgen.net/github/stars/Flutterando/asp)](https://GitHub.com/Flutterando/asp/stargazers/)
 

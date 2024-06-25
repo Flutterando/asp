@@ -22,7 +22,7 @@ jobs:
         run: flutter pub get
 
       - name: Run Analyze
-        run: flutter analyze --no-fatal-infos ./lib ./test
+        run: flutter analyze --no-fatal-infos ./lib/**/*.dart ./test/**/*.dart
 
       - name: Check format
         run: dart format --set-exit-if-changed ./lib ./test
