@@ -4,8 +4,11 @@ part of '../asp.dart';
 extension AtomHookExtension on HookState {
   /// Gets the state of the [Atom] and registers the Widget to be
   /// rebuilt when the [Atom] is modified.
-  T useAtomState<T>(Atom<T> atom) {
-    return useListenable(atom).state;
+  /// [atom]: The [Atom] to be observed.
+  /// [when]: An optional function that determines whether the Widget should
+  T useAtomState<T>(Atom<T> atom, {bool Function(T oldState, T state)? when}) {
+    final hook = _AtomStateHook(atom, when);
+    return use(hook).atom.state;
   }
 
   /// Listens to the [Atom] and executes the [effect] whenever the [Atom]
@@ -24,6 +27,34 @@ extension AtomHookExtension on HookState {
   }) {
     final hook = _AtomEffectHook(body, effect);
     use(hook);
+  }
+}
+
+class _AtomStateHook<T> extends Hook<T> {
+  final Atom<T> atom;
+  final Function(T _oldState, T state)? when;
+  late T _oldState;
+
+  _AtomStateHook(this.atom, [this.when]);
+
+  @override
+  void init() {
+    _oldState = atom.state;
+    atom.addListener(_listener);
+  }
+
+  void _listener() {
+    final state = atom.state;
+
+    if (when?.call(_oldState, state) ?? true) {
+      setState();
+    }
+    _oldState = state;
+  }
+
+  @override
+  void dispose() {
+    atom.removeListener(_listener);
   }
 }
 

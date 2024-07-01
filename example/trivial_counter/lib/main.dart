@@ -1,8 +1,12 @@
+import 'package:asp/asp.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/counter_page.dart';
 
 void main() {
+  AtomObserver.changes((status) {
+    print(status);
+  });
   runApp(MyApp());
 }
 

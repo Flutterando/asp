@@ -1,3 +1,8 @@
+## [2.0.1] - 2024-06-26
+
+- Fix: **atomAction** now returning **FutureOr**.
+- Fix: propertie **when** in **useAtomState** hook;
+
 ## [2.0.0] - 2024-06-24
 
 After extensive feedback, we are changing the API to make the standard more intuitive and user-friendly. We also added stricter limits for more complex projects and introduced a “predictability” system in state changes to improve tracking and debugging while reducing unwanted side effects. Some changes may seem drastic, but we believe everything will make more sense once you give this new API a chance.

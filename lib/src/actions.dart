@@ -47,7 +47,7 @@ sealed class AtomAction {
   AtomAction(this._scope, this._key);
 
   /// Executes the action
-  void call() => _scope(SetState(_key));
+  FutureOr<void> call() => _scope(SetState(_key));
 }
 
 class _AtomAction extends AtomAction {
