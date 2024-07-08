@@ -21,7 +21,7 @@ part of '../asp.dart';
 /// counterAction();
 /// ```
 sealed class AtomAction {
-  final FutureOr<void> Function(SetState set) _scope;
+  final FutureOr Function(SetState set) _scope;
   final String _key;
 
   /// An [Atom] can only be modified within an [AtomAction].<br>
@@ -47,12 +47,12 @@ sealed class AtomAction {
   AtomAction(this._scope, this._key);
 
   /// Executes the action
-  FutureOr<void> call() => _scope(SetState(_key));
+  FutureOr call() => _scope(SetState(_key));
 }
 
 class _AtomAction extends AtomAction {
   _AtomAction(
-    FutureOr<void> Function(SetState set) _scope,
+    FutureOr Function(SetState set) _scope,
     String? key,
   ) : super(_scope, key ?? 'atomAction');
 }
@@ -78,7 +78,7 @@ class _AtomAction extends AtomAction {
 /// counterAction();
 /// ```
 sealed class AtomAction1<A> {
-  final FutureOr<void> Function(SetState set, A arg1) _scope;
+  final FutureOr Function(SetState set, A arg1) _scope;
   final String _key;
 
   /// An [Atom] can only be modified within an [AtomAction].<br>
@@ -104,12 +104,12 @@ sealed class AtomAction1<A> {
   AtomAction1(this._scope, this._key);
 
   /// Executes the action
-  FutureOr<void> call(A arg1) => _scope(SetState(_key), arg1);
+  FutureOr call(A arg1) => _scope(SetState(_key), arg1);
 }
 
 class _AtomAction1<A> extends AtomAction1<A> {
   _AtomAction1(
-    FutureOr<void> Function(SetState set, A arg1) _scope,
+    FutureOr Function(SetState set, A arg1) _scope,
     String? key,
   ) : super(_scope, key ?? 'atomAction1');
 }
@@ -135,7 +135,7 @@ class _AtomAction1<A> extends AtomAction1<A> {
 /// counterAction();
 /// ```
 sealed class AtomAction2<A1, A2> {
-  final FutureOr<void> Function(SetState set, A1 arg1, A2 arg2) _scope;
+  final FutureOr Function(SetState set, A1 arg1, A2 arg2) _scope;
   final String _key;
 
   /// An [Atom] can only be modified within an [AtomAction].<br>
@@ -161,12 +161,12 @@ sealed class AtomAction2<A1, A2> {
   AtomAction2(this._scope, this._key);
 
   /// Executes the action
-  FutureOr<void> call(A1 arg1, A2 arg2) => _scope(SetState(_key), arg1, arg2);
+  FutureOr call(A1 arg1, A2 arg2) => _scope(SetState(_key), arg1, arg2);
 }
 
 class _AtomAction2<A1, A2> extends AtomAction2<A1, A2> {
   _AtomAction2(
-    FutureOr<void> Function(SetState set, A1 arg1, A2 arg2) _scope,
+    FutureOr Function(SetState set, A1 arg1, A2 arg2) _scope,
     String? key,
   ) : super(_scope, key ?? 'atomAction2');
 }
@@ -192,7 +192,7 @@ class _AtomAction2<A1, A2> extends AtomAction2<A1, A2> {
 /// counterAction();
 /// ```
 sealed class AtomAction3<A1, A2, A3> {
-  final FutureOr<void> Function(SetState set, A1 arg1, A2 arg2, A3 arg3) _scope;
+  final FutureOr Function(SetState set, A1 arg1, A2 arg2, A3 arg3) _scope;
   final String _key;
 
   /// An [Atom] can only be modified within an [AtomAction].<br>
@@ -218,7 +218,7 @@ sealed class AtomAction3<A1, A2, A3> {
   AtomAction3(this._scope, this._key);
 
   /// Executes the action
-  FutureOr<void> call(A1 arg1, A2 arg2, A3 arg3) => _scope(
+  FutureOr call(A1 arg1, A2 arg2, A3 arg3) => _scope(
         SetState(_key),
         arg1,
         arg2,
@@ -228,7 +228,7 @@ sealed class AtomAction3<A1, A2, A3> {
 
 class _AtomAction3<A1, A2, A3> extends AtomAction3<A1, A2, A3> {
   _AtomAction3(
-    FutureOr<void> Function(SetState set, A1 arg1, A2 arg2, A3 arg3) _scope,
+    FutureOr Function(SetState set, A1 arg1, A2 arg2, A3 arg3) _scope,
     String? key,
   ) : super(_scope, key ?? 'atomAction3');
 }
