@@ -66,7 +66,6 @@ class _AtomBuilderState extends State<AtomBuilder> {
   @override
   Widget build(BuildContext context) {
     final child = widget.builder(context, _get);
-    _get._untrack();
     return child;
   }
 }

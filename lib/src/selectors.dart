@@ -17,7 +17,6 @@ class _AtomSelector<T> extends Atom<T> {
       _setState(_selector(_get), key);
     };
     _state = _selector(_get);
-    _get._untrack();
   }
 
   @override
@@ -85,14 +84,12 @@ class _AsyncAtomSelector<T> extends Atom<T> {
     _get._selectorNotifyListeners = () {
       _requestQueue.add(() async {
         final newState = await _scope(_get);
-        if (_get._tracking) return;
         _setState(newState, key);
       });
       _processQueue();
     };
     final newState = await _scope(_get);
     _setState(newState, key);
-    _get._untrack();
   }
 
   @override

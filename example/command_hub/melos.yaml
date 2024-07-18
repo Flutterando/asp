@@ -1,0 +1,11 @@
+name: command_hub
+
+packages:
+  - apps/**
+  - packages/**
+
+scripts:
+  routefly:
+    exec: dart run routefly
+    packageFilters:
+      dirExists: "lib/app"

@@ -217,7 +217,6 @@ RxDisposer atomEffect<T>(
   };
 
   body(get);
-  get._untrack();
 
   return RxDisposer(get._removeListeners);
 }

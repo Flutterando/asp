@@ -181,27 +181,23 @@ class _Atom<T> extends Atom<T> {
 final class GetState {
   late final void Function() _selectorNotifyListeners;
   final Set<Atom> _listenables = {};
-  var _tracking = true;
 
   GetState._();
 
   /// Registers a notifier and returns its value.
   R call<R>(Atom<R> atom) {
-    if (_tracking) {
+    if (_listenables.add(atom)) {
       atom.addListener(_selectorNotifyListeners);
-      _listenables.add(atom);
     }
     return atom.state;
   }
-
-  void _untrack() => _tracking = false;
 
   /// Disposes of all registered listeners.
   void _removeListeners() {
     for (final listenable in _listenables) {
       listenable.removeListener(_selectorNotifyListeners);
     }
-    _tracking = true;
+    _listenables.clear();
   }
 }
 
