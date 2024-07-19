@@ -4,6 +4,8 @@ import 'package:flutter/material.dart' hide ColorScheme;
 class CommandTile extends StatefulWidget {
   final String title;
   final IconData icon;
+  final List<String> actions;
+  final void Function(String action)? onAction;
   final void Function()? onTap;
   final void Function()? onLongPress;
 
@@ -11,6 +13,8 @@ class CommandTile extends StatefulWidget {
     super.key,
     this.onTap,
     this.onLongPress,
+    this.onAction,
+    this.actions = const [],
     required this.title,
     required this.icon,
   });
@@ -62,65 +66,86 @@ class _CommandTileState extends State<CommandTile> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              backgroundColor.startColor,
-              backgroundColor.endColor,
-            ],
-          ),
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onLongPress: widget.onLongPress,
-          onTap: _controller.value == 0
-              ? () {
-                  _controller.forward().then((_) => _controller.reset());
-                  widget.onTap?.call();
-                }
-              : null,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Stack(
-              children: [
-                FractionalTranslation(
-                  translation: Offset(slideAnimation.value, 0.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(opacityAnimation.value),
-                      borderRadius: BorderRadius.circular(8),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  backgroundColor.startColor,
+                  backgroundColor.endColor,
+                ],
+              ),
+            ),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(12),
+              onLongPress: widget.onLongPress,
+              onTap: _controller.value == 0
+                  ? () {
+                      _controller.forward().then((_) => _controller.reset());
+                      widget.onTap?.call();
+                    }
+                  : null,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Stack(
+                  children: [
+                    FractionalTranslation(
+                      translation: Offset(slideAnimation.value, 0.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(opacityAnimation.value),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        widget.icon,
-                        color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            widget.icon,
+                            color: Colors.white,
+                          ),
+                          const Spacer(),
+                          Text(
+                            widget.title,
+                            style: Theme.of(context) //
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(color: Colors.white),
+                          ),
+                        ],
                       ),
-                      const Spacer(),
-                      Text(
-                        widget.title,
-                        style: Theme.of(context) //
-                            .textTheme
-                            .titleSmall
-                            ?.copyWith(color: Colors.white),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+          if (widget.actions.isNotEmpty)
+            Align(
+              alignment: Alignment.topRight,
+              child: PopupMenuButton<String>(
+                offset: const Offset(-80, 10),
+                iconColor: Colors.white,
+                onSelected: widget.onAction?.call,
+                itemBuilder: (context) {
+                  return widget.actions
+                      .map((action) => PopupMenuItem<String>(
+                            value: action,
+                            child: Text(action),
+                          ))
+                      .toList();
+                },
+              ),
+            ),
+        ],
       ),
     );
   }

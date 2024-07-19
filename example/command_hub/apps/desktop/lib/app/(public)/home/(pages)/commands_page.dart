@@ -22,6 +22,79 @@ class CommandsPage extends StatefulWidget {
 }
 
 class _CommandsPageState extends State<CommandsPage> {
+  void _createCommand() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Create command'),
+          content: const Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('data'),
+              SizedBox(height: 10),
+              TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Name',
+                ),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Name',
+                ),
+                maxLines: 3,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _confirmDelete() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete command'),
+          content: const Text('Are you sure you want to delete this command?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return CommandScaffold(
@@ -40,6 +113,10 @@ class _CommandsPageState extends State<CommandsPage> {
             CommandTile(
               title: 'Command 1',
               icon: Icons.ac_unit,
+              actions: const ['Edit', 'Delete'],
+              onAction: (action) {
+                _confirmDelete();
+              },
               onLongPress: () {
                 Routefly.push(routePaths.home.editCommand);
               },
@@ -47,6 +124,10 @@ class _CommandsPageState extends State<CommandsPage> {
             CommandTile(
               title: 'Command 2',
               icon: Icons.access_alarm,
+              actions: const ['Edit', 'Delete'],
+              onAction: (action) {
+                _createCommand();
+              },
               onLongPress: () {
                 Routefly.push(routePaths.home.editCommand);
               },
