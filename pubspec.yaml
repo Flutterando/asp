@@ -1,6 +1,6 @@
 name: asp
 description: ASP (Atomic State Pattern) offers a simplified, Predictable and Powerful State Management for Flutter.
-version: 2.0.1
+version: 2.0.2
 homepage: https://github.com/Flutterando/asp
 documentation: https://asp.flutterando.com.br
 topics: [state-management]

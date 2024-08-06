@@ -96,7 +96,7 @@ Atom<T> asyncSelector<T>(
 /// counterAction();
 /// ```
 AtomAction atomAction(
-  FutureOr<void> Function(SetState set) scope, {
+  FutureOr Function(SetState set) scope, {
   String? key,
 }) {
   return _AtomAction(scope, key ?? 'atomAction');
@@ -123,7 +123,7 @@ AtomAction atomAction(
 /// counterAction();
 /// ```
 AtomAction1<A> atomAction1<A>(
-  FutureOr<void> Function(SetState set, A action) scope, {
+  FutureOr Function(SetState set, A action) scope, {
   String? key,
 }) {
   return _AtomAction1<A>(scope, key ?? 'atomAction1');
@@ -150,7 +150,7 @@ AtomAction1<A> atomAction1<A>(
 /// counterAction();
 /// ```
 AtomAction2<A1, A2> atomAction2<A1, A2>(
-  FutureOr<void> Function(SetState set, A1 arg1, A2 arg2) scope, {
+  FutureOr Function(SetState set, A1 arg1, A2 arg2) scope, {
   String? key,
 }) {
   return _AtomAction2<A1, A2>(scope, key ?? 'atomAction2');
@@ -177,7 +177,7 @@ AtomAction2<A1, A2> atomAction2<A1, A2>(
 /// counterAction();
 /// ```
 AtomAction3<A1, A2, A3> atomAction3<A1, A2, A3>(
-  FutureOr<void> Function(
+  FutureOr Function(
     SetState set,
     A1 arg1,
     A2 arg2,

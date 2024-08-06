@@ -1,4 +1,4 @@
-## [2.0.1] - 2024-06-26
+## [2.0.2] - 2024-08-06
 
 - Fix: **atomAction** now returning **FutureOr**.
 - Fix: propertie **when** in **useAtomState** hook;
