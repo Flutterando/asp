@@ -1,3 +1,6 @@
+## [2.0.3] - 2024-10-21
+- Fix: Distict param
+
 ## [2.0.2] - 2024-08-06
 
 - Fix: **atomAction** now returning **FutureOr**.

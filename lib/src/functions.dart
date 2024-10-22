@@ -27,8 +27,14 @@ Atom<T> atom<T>(
   T state, {
   String? key,
   List<AtomPipe<T>> pipes = const [],
+  bool distinct = true,
 }) {
-  return _Atom<T>(state, key: key ?? 'Atom($T)', pipes: pipes);
+  return _Atom<T>(
+    state,
+    key: key ?? 'Atom($T)',
+    pipes: pipes,
+    distinct: distinct,
+  );
 }
 
 /// Creates a selector [Atom] that derives its state from other Atoms.<br>
